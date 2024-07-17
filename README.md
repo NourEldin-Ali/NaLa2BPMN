@@ -1,7 +1,7 @@
-# Title of Your Paper
+# A Decomposed Hybrid Approach to Business Process Modeling with LLMs
 
 ## Introduction
-This repository contains the technical report, and the results for our paper titled "Title of Your Paper". 
+This repository contains the technical report, and the results for our paper titled "A Decomposed Hybrid Approach to Business Process Modeling with LLMs". 
 
 ## Online tool
 Our tool is available in <a href="https://nala2bpmn.bonitapps.com/">https://nala2bpmn.bonitapps.com/</a>
