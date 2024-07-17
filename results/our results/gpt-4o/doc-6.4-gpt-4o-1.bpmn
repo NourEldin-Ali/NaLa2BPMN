@@ -1,0 +1,474 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><semantic:definitions xmlns:semantic="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" exporter="demo" exporterVersion="1.0.0" targetNamespace="http://org.openbpmn">
+    <semantic:process id="process_1" name="Default Process" processType="Public">
+        <semantic:startEvent id="potential-customers-identified" name="Potential customers identified ">
+            <semantic:outgoing>sq-0</semantic:outgoing>
+        </semantic:startEvent>
+        <semantic:userTask id="determine-contact-details" name="Determine contact details ">
+            <semantic:incoming>sq-0</semantic:incoming>
+            <semantic:outgoing>sq-53</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:sequenceFlow id="sq-0" sourceRef="potential-customers-identified" targetRef="determine-contact-details"/>
+        <semantic:userTask id="use-personal-connections" name="Use personal connections ">
+            <semantic:incoming>sq-65</semantic:incoming>
+            <semantic:outgoing>sq-67</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:userTask id="initiate-calls" name="Initiate calls ">
+            <semantic:incoming>sq-58</semantic:incoming>
+            <semantic:outgoing>sq-32</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:userTask id="determine-contact-person" name="Determine contact person ">
+            <semantic:incoming>sq-60</semantic:incoming>
+            <semantic:outgoing>sq-61</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:userTask id="attempt-to-acquire-customer" name="Attempt to acquire customer ">
+            <semantic:incoming>sq-37</semantic:incoming>
+            <semantic:outgoing>sq-42</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:userTask id="schedule-online-presentation" name="Schedule online presentation ">
+            <semantic:incoming>sq-43</semantic:incoming>
+            <semantic:outgoing>sq-17</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:userTask id="conduct-online-presentation" name="Conduct online presentation ">
+            <semantic:incoming>sq-18</semantic:incoming>
+            <semantic:outgoing>sq-21</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:serviceTask id="wait-for-customer-response" name="Wait for customer response ">
+            <semantic:incoming>sq-22</semantic:incoming>
+            <semantic:outgoing>sq-11</semantic:outgoing>
+        </semantic:serviceTask>
+        <semantic:userTask id="follow-up-with-a-call" name="Follow up with a call ">
+            <semantic:incoming>sq-12</semantic:incoming>
+            <semantic:outgoing>sq-14</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:userTask id="create-quotation" name="Create quotation ">
+            <semantic:incoming>sq-16</semantic:incoming>
+            <semantic:outgoing>sq-10</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:endEvent id="quotation-created" name=" Quotation created">
+            <semantic:incoming>sq-10</semantic:incoming>
+        </semantic:endEvent>
+        <semantic:sequenceFlow id="sq-10" sourceRef="create-quotation" targetRef="quotation-created"/>
+        <semantic:exclusiveGateway gatewayDirection="Diverging" id="gt-0" name="">
+            <semantic:incoming>sq-11</semantic:incoming>
+            <semantic:outgoing>sq-12</semantic:outgoing>
+            <semantic:outgoing>sq-15</semantic:outgoing>
+        </semantic:exclusiveGateway>
+        <semantic:sequenceFlow id="sq-11" sourceRef="wait-for-customer-response" targetRef="gt-0"/>
+        <semantic:sequenceFlow id="sq-12" sourceRef="gt-0" targetRef="follow-up-with-a-call"/>
+        <semantic:exclusiveGateway gatewayDirection="Diverging" id="gt-1" name="">
+            <semantic:incoming>sq-14</semantic:incoming>
+            <semantic:incoming>sq-15</semantic:incoming>
+            <semantic:outgoing>sq-16</semantic:outgoing>
+        </semantic:exclusiveGateway>
+        <semantic:sequenceFlow id="sq-14" sourceRef="follow-up-with-a-call" targetRef="gt-1"/>
+        <semantic:sequenceFlow id="sq-15" sourceRef="gt-0" targetRef="gt-1"/>
+        <semantic:sequenceFlow id="sq-16" sourceRef="gt-1" targetRef="create-quotation"/>
+        <semantic:userTask id="conduct-technical-presentation" name="Conduct technical presentation ">
+            <semantic:incoming>sq-19</semantic:incoming>
+            <semantic:outgoing>sq-20</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:exclusiveGateway gatewayDirection="Diverging" id="gt-2" name="">
+            <semantic:incoming>sq-17</semantic:incoming>
+            <semantic:outgoing>sq-18</semantic:outgoing>
+            <semantic:outgoing>sq-19</semantic:outgoing>
+        </semantic:exclusiveGateway>
+        <semantic:sequenceFlow id="sq-17" sourceRef="schedule-online-presentation" targetRef="gt-2"/>
+        <semantic:sequenceFlow id="sq-18" sourceRef="gt-2" targetRef="conduct-online-presentation"/>
+        <semantic:sequenceFlow id="sq-19" sourceRef="gt-2" targetRef="conduct-technical-presentation"/>
+        <semantic:exclusiveGateway gatewayDirection="Diverging" id="gt-3" name="">
+            <semantic:incoming>sq-20</semantic:incoming>
+            <semantic:incoming>sq-21</semantic:incoming>
+            <semantic:outgoing>sq-22</semantic:outgoing>
+        </semantic:exclusiveGateway>
+        <semantic:sequenceFlow id="sq-20" sourceRef="conduct-technical-presentation" targetRef="gt-3"/>
+        <semantic:sequenceFlow id="sq-21" sourceRef="conduct-online-presentation" targetRef="gt-3"/>
+        <semantic:sequenceFlow id="sq-22" sourceRef="gt-3" targetRef="wait-for-customer-response"/>
+        <semantic:userTask id="determine-available-budget" name="Determine available budget ">
+            <semantic:incoming>sq-59</semantic:incoming>
+            <semantic:outgoing>sq-29</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:endEvent id="insufficient-project-budget" name=" Insufficient project budget">
+            <semantic:incoming>sq-31</semantic:incoming>
+        </semantic:endEvent>
+        <semantic:exclusiveGateway gatewayDirection="Diverging" id="gt-6" name="">
+            <semantic:incoming>sq-29</semantic:incoming>
+            <semantic:outgoing>sq-31</semantic:outgoing>
+            <semantic:outgoing>sq-62</semantic:outgoing>
+        </semantic:exclusiveGateway>
+        <semantic:sequenceFlow id="sq-29" sourceRef="determine-available-budget" targetRef="gt-6"/>
+        <semantic:sequenceFlow id="sq-31" sourceRef="gt-6" targetRef="insufficient-project-budget"/>
+        <semantic:userTask id="gauge-general-interest" name="Gauge general interest ">
+            <semantic:incoming>sq-34</semantic:incoming>
+            <semantic:outgoing>sq-44</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:parallelGateway gatewayDirection="Diverging" id="gt-7" name="">
+            <semantic:incoming>sq-32</semantic:incoming>
+            <semantic:outgoing>sq-34</semantic:outgoing>
+            <semantic:outgoing>sq-59</semantic:outgoing>
+            <semantic:outgoing>sq-60</semantic:outgoing>
+        </semantic:parallelGateway>
+        <semantic:sequenceFlow id="sq-32" sourceRef="initiate-calls" targetRef="gt-7"/>
+        <semantic:sequenceFlow id="sq-34" sourceRef="gt-7" targetRef="gauge-general-interest"/>
+        <semantic:parallelGateway gatewayDirection="Diverging" id="gt-8" name="">
+            <semantic:incoming>sq-61</semantic:incoming>
+            <semantic:incoming>sq-62</semantic:incoming>
+            <semantic:incoming>sq-64</semantic:incoming>
+            <semantic:outgoing>sq-37</semantic:outgoing>
+        </semantic:parallelGateway>
+        <semantic:sequenceFlow id="sq-37" sourceRef="gt-8" targetRef="attempt-to-acquire-customer"/>
+        <semantic:exclusiveGateway gatewayDirection="Diverging" id="gt-10" name="">
+            <semantic:incoming>sq-42</semantic:incoming>
+            <semantic:incoming>sq-63</semantic:incoming>
+            <semantic:outgoing>sq-43</semantic:outgoing>
+        </semantic:exclusiveGateway>
+        <semantic:sequenceFlow id="sq-42" sourceRef="attempt-to-acquire-customer" targetRef="gt-10"/>
+        <semantic:sequenceFlow id="sq-43" sourceRef="gt-10" targetRef="schedule-online-presentation"/>
+        <semantic:endEvent id="customer-not-interested" name=" Customer not interested">
+            <semantic:incoming>sq-46</semantic:incoming>
+        </semantic:endEvent>
+        <semantic:exclusiveGateway gatewayDirection="Diverging" id="gt-11" name="">
+            <semantic:incoming>sq-44</semantic:incoming>
+            <semantic:outgoing>sq-46</semantic:outgoing>
+            <semantic:outgoing>sq-63</semantic:outgoing>
+            <semantic:outgoing>sq-64</semantic:outgoing>
+        </semantic:exclusiveGateway>
+        <semantic:sequenceFlow id="sq-44" sourceRef="gauge-general-interest" targetRef="gt-11"/>
+        <semantic:sequenceFlow id="sq-46" sourceRef="gt-11" targetRef="customer-not-interested"/>
+        <semantic:serviceTask id="purchase-contact-lists" name="Purchase contact lists ">
+            <semantic:incoming>sq-66</semantic:incoming>
+            <semantic:outgoing>sq-68</semantic:outgoing>
+        </semantic:serviceTask>
+        <semantic:userTask id="participate-in-exhibitions" name="Participate in exhibitions ">
+            <semantic:incoming>sq-55</semantic:incoming>
+            <semantic:outgoing>sq-57</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:parallelGateway gatewayDirection="Diverging" id="gt-14" name="">
+            <semantic:incoming>sq-53</semantic:incoming>
+            <semantic:outgoing>sq-55</semantic:outgoing>
+            <semantic:outgoing>sq-65</semantic:outgoing>
+            <semantic:outgoing>sq-66</semantic:outgoing>
+        </semantic:parallelGateway>
+        <semantic:sequenceFlow id="sq-53" sourceRef="determine-contact-details" targetRef="gt-14"/>
+        <semantic:sequenceFlow id="sq-55" sourceRef="gt-14" targetRef="participate-in-exhibitions"/>
+        <semantic:parallelGateway gatewayDirection="Diverging" id="gt-15" name="">
+            <semantic:incoming>sq-57</semantic:incoming>
+            <semantic:incoming>sq-67</semantic:incoming>
+            <semantic:incoming>sq-68</semantic:incoming>
+            <semantic:outgoing>sq-58</semantic:outgoing>
+        </semantic:parallelGateway>
+        <semantic:sequenceFlow id="sq-57" sourceRef="participate-in-exhibitions" targetRef="gt-15"/>
+        <semantic:sequenceFlow id="sq-58" sourceRef="gt-15" targetRef="initiate-calls"/>
+        <semantic:sequenceFlow id="sq-59" sourceRef="gt-7" targetRef="determine-available-budget"/>
+        <semantic:sequenceFlow id="sq-60" sourceRef="gt-7" targetRef="determine-contact-person"/>
+        <semantic:sequenceFlow id="sq-61" sourceRef="determine-contact-person" targetRef="gt-8"/>
+        <semantic:sequenceFlow id="sq-62" sourceRef="gt-6" targetRef="gt-8"/>
+        <semantic:sequenceFlow id="sq-63" sourceRef="gt-11" targetRef="gt-10"/>
+        <semantic:sequenceFlow id="sq-64" sourceRef="gt-11" targetRef="gt-8"/>
+        <semantic:sequenceFlow id="sq-65" sourceRef="gt-14" targetRef="use-personal-connections"/>
+        <semantic:sequenceFlow id="sq-66" sourceRef="gt-14" targetRef="purchase-contact-lists"/>
+        <semantic:sequenceFlow id="sq-67" sourceRef="use-personal-connections" targetRef="gt-15"/>
+        <semantic:sequenceFlow id="sq-68" sourceRef="purchase-contact-lists" targetRef="gt-15"/>
+    </semantic:process>
+    <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+        <bpmndi:BPMNPlane bpmnElement="process_1" id="BPMNPlane_1">
+            <bpmndi:BPMNShape bpmnElement="customer-not-interested" id="BPMNShape_customer-not-interested">
+                <dc:Bounds height="30.0" width="30.0" x="1885.0" y="35.0"/>
+                <bpmndi:BPMNLabel>
+                    <dc:Bounds height="30.0" width="30.0" x="1885.0" y="80.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="participate-in-exhibitions" id="BPMNShape_participate-in-exhibitions">
+                <dc:Bounds height="60.0" width="120.0" x="640.0" y="20.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="follow-up-with-a-call" id="BPMNShape_follow-up-with-a-call">
+                <dc:Bounds height="60.0" width="120.0" x="3640.0" y="120.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="conduct-online-presentation" id="BPMNShape_conduct-online-presentation">
+                <dc:Bounds height="60.0" width="120.0" x="2840.0" y="120.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="gauge-general-interest" id="BPMNShape_gauge-general-interest">
+                <dc:Bounds height="60.0" width="120.0" x="1440.0" y="120.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="gt-11" id="BPMNShape_gt-11">
+                <dc:Bounds height="60.0" width="60.0" x="1670.0" y="120.0"/>
+                <bpmndi:BPMNLabel>
+                    <dc:Bounds height="60.0" width="60.0" x="1640.0" y="90.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="gt-10" id="BPMNShape_gt-10">
+                <dc:Bounds height="60.0" width="60.0" x="2270.0" y="220.0"/>
+                <bpmndi:BPMNLabel>
+                    <dc:Bounds height="60.0" width="60.0" x="2240.0" y="190.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="schedule-online-presentation" id="BPMNShape_schedule-online-presentation">
+                <dc:Bounds height="60.0" width="120.0" x="2440.0" y="220.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="gt-2" id="BPMNShape_gt-2">
+                <dc:Bounds height="60.0" width="60.0" x="2670.0" y="220.0"/>
+                <bpmndi:BPMNLabel>
+                    <dc:Bounds height="60.0" width="60.0" x="2640.0" y="190.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="gt-3" id="BPMNShape_gt-3">
+                <dc:Bounds height="60.0" width="60.0" x="3070.0" y="220.0"/>
+                <bpmndi:BPMNLabel>
+                    <dc:Bounds height="60.0" width="60.0" x="3040.0" y="190.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="wait-for-customer-response" id="BPMNShape_wait-for-customer-response">
+                <dc:Bounds height="60.0" width="120.0" x="3240.0" y="220.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="gt-0" id="BPMNShape_gt-0">
+                <dc:Bounds height="60.0" width="60.0" x="3470.0" y="220.0"/>
+                <bpmndi:BPMNLabel>
+                    <dc:Bounds height="60.0" width="60.0" x="3440.0" y="190.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="gt-1" id="BPMNShape_gt-1">
+                <dc:Bounds height="60.0" width="60.0" x="3870.0" y="220.0"/>
+                <bpmndi:BPMNLabel>
+                    <dc:Bounds height="60.0" width="60.0" x="3840.0" y="190.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="create-quotation" id="BPMNShape_create-quotation">
+                <dc:Bounds height="60.0" width="120.0" x="4040.0" y="220.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="quotation-created" id="BPMNShape_quotation-created">
+                <dc:Bounds height="30.0" width="30.0" x="4285.0" y="235.0"/>
+                <bpmndi:BPMNLabel>
+                    <dc:Bounds height="30.0" width="30.0" x="4285.0" y="280.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="insufficient-project-budget" id="BPMNShape_insufficient-project-budget">
+                <dc:Bounds height="30.0" width="30.0" x="1885.0" y="335.0"/>
+                <bpmndi:BPMNLabel>
+                    <dc:Bounds height="30.0" width="30.0" x="1885.0" y="380.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="gt-8" id="BPMNShape_gt-8">
+                <dc:Bounds height="60.0" width="60.0" x="1870.0" y="420.0"/>
+                <bpmndi:BPMNLabel>
+                    <dc:Bounds height="60.0" width="60.0" x="1840.0" y="390.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="attempt-to-acquire-customer" id="BPMNShape_attempt-to-acquire-customer">
+                <dc:Bounds height="60.0" width="120.0" x="2040.0" y="420.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="conduct-technical-presentation" id="BPMNShape_conduct-technical-presentation">
+                <dc:Bounds height="60.0" width="120.0" x="2840.0" y="320.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="potential-customers-identified" id="BPMNShape_potential-customers-identified">
+                <dc:Bounds height="30.0" width="30.0" x="85.0" y="535.0"/>
+                <bpmndi:BPMNLabel>
+                    <dc:Bounds height="30.0" width="30.0" x="85.0" y="580.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="determine-contact-details" id="BPMNShape_determine-contact-details">
+                <dc:Bounds height="60.0" width="120.0" x="240.0" y="520.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="gt-14" id="BPMNShape_gt-14">
+                <dc:Bounds height="60.0" width="60.0" x="470.0" y="520.0"/>
+                <bpmndi:BPMNLabel>
+                    <dc:Bounds height="60.0" width="60.0" x="440.0" y="490.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="use-personal-connections" id="BPMNShape_use-personal-connections">
+                <dc:Bounds height="60.0" width="120.0" x="640.0" y="520.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="gt-15" id="BPMNShape_gt-15">
+                <dc:Bounds height="60.0" width="60.0" x="870.0" y="520.0"/>
+                <bpmndi:BPMNLabel>
+                    <dc:Bounds height="60.0" width="60.0" x="840.0" y="490.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="initiate-calls" id="BPMNShape_initiate-calls">
+                <dc:Bounds height="60.0" width="120.0" x="1040.0" y="520.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="gt-7" id="BPMNShape_gt-7">
+                <dc:Bounds height="60.0" width="60.0" x="1270.0" y="520.0"/>
+                <bpmndi:BPMNLabel>
+                    <dc:Bounds height="60.0" width="60.0" x="1240.0" y="490.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="determine-available-budget" id="BPMNShape_determine-available-budget">
+                <dc:Bounds height="60.0" width="120.0" x="1440.0" y="520.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="gt-6" id="BPMNShape_gt-6">
+                <dc:Bounds height="60.0" width="60.0" x="1670.0" y="520.0"/>
+                <bpmndi:BPMNLabel>
+                    <dc:Bounds height="60.0" width="60.0" x="1640.0" y="490.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="purchase-contact-lists" id="BPMNShape_purchase-contact-lists">
+                <dc:Bounds height="60.0" width="120.0" x="640.0" y="620.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="determine-contact-person" id="BPMNShape_determine-contact-person">
+                <dc:Bounds height="60.0" width="120.0" x="1440.0" y="620.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNEdge bpmnElement="sq-0" id="BPMNEdge_sq-0">
+                <di:waypoint x="115.0" y="550.0"/>
+                <di:waypoint x="240.0" y="550.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-10" id="BPMNEdge_sq-10">
+                <di:waypoint x="4160.0" y="250.0"/>
+                <di:waypoint x="4285.0" y="250.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-11" id="BPMNEdge_sq-11">
+                <di:waypoint x="3360.0" y="250.0"/>
+                <di:waypoint x="3470.0" y="250.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-12" id="BPMNEdge_sq-12">
+                <di:waypoint x="3500.0" y="220.0"/>
+                <di:waypoint x="3500.0" y="150.0"/>
+                <di:waypoint x="3640.0" y="150.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-14" id="BPMNEdge_sq-14">
+                <di:waypoint x="3760.0" y="150.0"/>
+                <di:waypoint x="3900.0" y="150.0"/>
+                <di:waypoint x="3900.0" y="220.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-15" id="BPMNEdge_sq-15">
+                <di:waypoint x="3530.0" y="250.0"/>
+                <di:waypoint x="3870.0" y="250.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-16" id="BPMNEdge_sq-16">
+                <di:waypoint x="3930.0" y="250.0"/>
+                <di:waypoint x="4040.0" y="250.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-17" id="BPMNEdge_sq-17">
+                <di:waypoint x="2560.0" y="250.0"/>
+                <di:waypoint x="2670.0" y="250.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-18" id="BPMNEdge_sq-18">
+                <di:waypoint x="2700.0" y="220.0"/>
+                <di:waypoint x="2700.0" y="150.0"/>
+                <di:waypoint x="2840.0" y="150.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-19" id="BPMNEdge_sq-19">
+                <di:waypoint x="2700.0" y="280.0"/>
+                <di:waypoint x="2700.0" y="350.0"/>
+                <di:waypoint x="2840.0" y="350.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-20" id="BPMNEdge_sq-20">
+                <di:waypoint x="2960.0" y="350.0"/>
+                <di:waypoint x="3100.0" y="350.0"/>
+                <di:waypoint x="3100.0" y="280.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-21" id="BPMNEdge_sq-21">
+                <di:waypoint x="2960.0" y="150.0"/>
+                <di:waypoint x="3100.0" y="150.0"/>
+                <di:waypoint x="3100.0" y="220.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-22" id="BPMNEdge_sq-22">
+                <di:waypoint x="3130.0" y="250.0"/>
+                <di:waypoint x="3240.0" y="250.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-29" id="BPMNEdge_sq-29">
+                <di:waypoint x="1560.0" y="550.0"/>
+                <di:waypoint x="1670.0" y="550.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-31" id="BPMNEdge_sq-31">
+                <di:waypoint x="1700.0" y="520.0"/>
+                <di:waypoint x="1700.0" y="350.0"/>
+                <di:waypoint x="1885.0" y="350.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-32" id="BPMNEdge_sq-32">
+                <di:waypoint x="1160.0" y="550.0"/>
+                <di:waypoint x="1270.0" y="550.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-34" id="BPMNEdge_sq-34">
+                <di:waypoint x="1300.0" y="520.0"/>
+                <di:waypoint x="1300.0" y="150.0"/>
+                <di:waypoint x="1440.0" y="150.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-37" id="BPMNEdge_sq-37">
+                <di:waypoint x="1930.0" y="450.0"/>
+                <di:waypoint x="2040.0" y="450.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-42" id="BPMNEdge_sq-42">
+                <di:waypoint x="2160.0" y="450.0"/>
+                <di:waypoint x="2300.0" y="450.0"/>
+                <di:waypoint x="2300.0" y="280.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-43" id="BPMNEdge_sq-43">
+                <di:waypoint x="2330.0" y="250.0"/>
+                <di:waypoint x="2440.0" y="250.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-44" id="BPMNEdge_sq-44">
+                <di:waypoint x="1560.0" y="150.0"/>
+                <di:waypoint x="1670.0" y="150.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-46" id="BPMNEdge_sq-46">
+                <di:waypoint x="1700.0" y="120.0"/>
+                <di:waypoint x="1700.0" y="50.0"/>
+                <di:waypoint x="1885.0" y="50.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-53" id="BPMNEdge_sq-53">
+                <di:waypoint x="360.0" y="550.0"/>
+                <di:waypoint x="470.0" y="550.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-55" id="BPMNEdge_sq-55">
+                <di:waypoint x="500.0" y="520.0"/>
+                <di:waypoint x="500.0" y="50.0"/>
+                <di:waypoint x="640.0" y="50.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-57" id="BPMNEdge_sq-57">
+                <di:waypoint x="760.0" y="50.0"/>
+                <di:waypoint x="900.0" y="50.0"/>
+                <di:waypoint x="900.0" y="520.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-58" id="BPMNEdge_sq-58">
+                <di:waypoint x="930.0" y="550.0"/>
+                <di:waypoint x="1040.0" y="550.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-59" id="BPMNEdge_sq-59">
+                <di:waypoint x="1330.0" y="550.0"/>
+                <di:waypoint x="1440.0" y="550.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-60" id="BPMNEdge_sq-60">
+                <di:waypoint x="1300.0" y="580.0"/>
+                <di:waypoint x="1300.0" y="650.0"/>
+                <di:waypoint x="1440.0" y="650.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-61" id="BPMNEdge_sq-61">
+                <di:waypoint x="1560.0" y="650.0"/>
+                <di:waypoint x="1900.0" y="650.0"/>
+                <di:waypoint x="1900.0" y="480.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-62" id="BPMNEdge_sq-62">
+                <di:waypoint x="1730.0" y="550.0"/>
+                <di:waypoint x="1900.0" y="550.0"/>
+                <di:waypoint x="1900.0" y="480.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-63" id="BPMNEdge_sq-63">
+                <di:waypoint x="1730.0" y="150.0"/>
+                <di:waypoint x="2300.0" y="150.0"/>
+                <di:waypoint x="2300.0" y="220.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-64" id="BPMNEdge_sq-64">
+                <di:waypoint x="1730.0" y="150.0"/>
+                <di:waypoint x="1900.0" y="150.0"/>
+                <di:waypoint x="1900.0" y="420.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-65" id="BPMNEdge_sq-65">
+                <di:waypoint x="530.0" y="550.0"/>
+                <di:waypoint x="640.0" y="550.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-66" id="BPMNEdge_sq-66">
+                <di:waypoint x="500.0" y="580.0"/>
+                <di:waypoint x="500.0" y="650.0"/>
+                <di:waypoint x="640.0" y="650.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-67" id="BPMNEdge_sq-67">
+                <di:waypoint x="760.0" y="550.0"/>
+                <di:waypoint x="870.0" y="550.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-68" id="BPMNEdge_sq-68">
+                <di:waypoint x="760.0" y="650.0"/>
+                <di:waypoint x="900.0" y="650.0"/>
+                <di:waypoint x="900.0" y="580.0"/>
+            </bpmndi:BPMNEdge>
+        </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</semantic:definitions>

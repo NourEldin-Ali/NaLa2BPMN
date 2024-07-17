@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><semantic:definitions xmlns:semantic="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" exporter="demo" exporterVersion="1.0.0" targetNamespace="http://org.openbpmn">
+    <semantic:process id="process_1" name="Default Process" processType="Public">
+        <semantic:startEvent id="potential-customer-details-acquired" name="Potential customer details acquired ">
+            <semantic:outgoing>sq-0</semantic:outgoing>
+        </semantic:startEvent>
+        <semantic:userTask id="identify-potential-customers--contact-details" name="Identify potential customers' contact details ">
+            <semantic:incoming>sq-0</semantic:incoming>
+            <semantic:outgoing>sq-1</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:sequenceFlow id="sq-0" sourceRef="potential-customer-details-acquired" targetRef="identify-potential-customers--contact-details"/>
+        <semantic:userTask id="initiate-contact-with-potential-customer" name="Initiate contact with potential customer ">
+            <semantic:incoming>sq-1</semantic:incoming>
+            <semantic:outgoing>sq-2</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:sequenceFlow id="sq-1" sourceRef="identify-potential-customers--contact-details" targetRef="initiate-contact-with-potential-customer"/>
+        <semantic:userTask id="determine-contact-person" name="Determine contact person ">
+            <semantic:incoming>sq-2</semantic:incoming>
+            <semantic:outgoing>sq-3</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:sequenceFlow id="sq-2" sourceRef="initiate-contact-with-potential-customer" targetRef="determine-contact-person"/>
+        <semantic:userTask id="assess-budget-availability" name="Assess budget availability ">
+            <semantic:incoming>sq-3</semantic:incoming>
+            <semantic:outgoing>sq-4</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:sequenceFlow id="sq-3" sourceRef="determine-contact-person" targetRef="assess-budget-availability"/>
+        <semantic:userTask id="gauge-general-interest-in-the-product" name="Gauge general interest in the product ">
+            <semantic:incoming>sq-4</semantic:incoming>
+            <semantic:outgoing>sq-11</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:sequenceFlow id="sq-4" sourceRef="assess-budget-availability" targetRef="gauge-general-interest-in-the-product"/>
+        <semantic:userTask id="engage-customer-personally" name="Engage customer personally ">
+            <semantic:incoming>sq-12</semantic:incoming>
+            <semantic:outgoing>sq-6</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:userTask id="conduct-detailed-online-presentation" name="Conduct detailed online presentation ">
+            <semantic:incoming>sq-6</semantic:incoming>
+            <semantic:outgoing>sq-7</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:sequenceFlow id="sq-6" sourceRef="engage-customer-personally" targetRef="conduct-detailed-online-presentation"/>
+        <semantic:userTask id="wait-for-customer-response" name="Wait for customer response ">
+            <semantic:incoming>sq-7</semantic:incoming>
+            <semantic:outgoing>sq-8</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:sequenceFlow id="sq-7" sourceRef="conduct-detailed-online-presentation" targetRef="wait-for-customer-response"/>
+        <semantic:userTask id="follow-up-with-customer" name="Follow up with customer ">
+            <semantic:incoming>sq-8</semantic:incoming>
+            <semantic:outgoing>sq-9</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:sequenceFlow id="sq-8" sourceRef="wait-for-customer-response" targetRef="follow-up-with-customer"/>
+        <semantic:userTask id="create-quotation-for-customer" name="Create quotation for customer ">
+            <semantic:incoming>sq-9</semantic:incoming>
+            <semantic:outgoing>sq-10</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:sequenceFlow id="sq-9" sourceRef="follow-up-with-customer" targetRef="create-quotation-for-customer"/>
+        <semantic:endEvent id="quotation-created-and-presented" name=" Quotation created and presented">
+            <semantic:incoming>sq-10</semantic:incoming>
+        </semantic:endEvent>
+        <semantic:sequenceFlow id="sq-10" sourceRef="create-quotation-for-customer" targetRef="quotation-created-and-presented"/>
+        <semantic:endEvent id="customer-not-interested-or-budget-insignificant" name=" Customer not interested or budget insignificant">
+            <semantic:incoming>sq-13</semantic:incoming>
+        </semantic:endEvent>
+        <semantic:exclusiveGateway gatewayDirection="Diverging" id="gt-0" name="">
+            <semantic:incoming>sq-11</semantic:incoming>
+            <semantic:outgoing>sq-12</semantic:outgoing>
+            <semantic:outgoing>sq-13</semantic:outgoing>
+        </semantic:exclusiveGateway>
+        <semantic:sequenceFlow id="sq-11" sourceRef="gauge-general-interest-in-the-product" targetRef="gt-0"/>
+        <semantic:sequenceFlow id="sq-12" sourceRef="gt-0" targetRef="engage-customer-personally"/>
+        <semantic:sequenceFlow id="sq-13" sourceRef="gt-0" targetRef="customer-not-interested-or-budget-insignificant"/>
+    </semantic:process>
+    <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+        <bpmndi:BPMNPlane bpmnElement="process_1" id="BPMNPlane_1">
+            <bpmndi:BPMNShape bpmnElement="potential-customer-details-acquired" id="BPMNShape_potential-customer-details-acquired">
+                <dc:Bounds height="30.0" width="30.0" x="85.0" y="135.0"/>
+                <bpmndi:BPMNLabel>
+                    <dc:Bounds height="30.0" width="30.0" x="85.0" y="180.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="identify-potential-customers--contact-details" id="BPMNShape_identify-potential-customers--contact-details">
+                <dc:Bounds height="60.0" width="120.0" x="240.0" y="120.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="initiate-contact-with-potential-customer" id="BPMNShape_initiate-contact-with-potential-customer">
+                <dc:Bounds height="60.0" width="120.0" x="440.0" y="120.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="determine-contact-person" id="BPMNShape_determine-contact-person">
+                <dc:Bounds height="60.0" width="120.0" x="640.0" y="120.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="assess-budget-availability" id="BPMNShape_assess-budget-availability">
+                <dc:Bounds height="60.0" width="120.0" x="840.0" y="120.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="gauge-general-interest-in-the-product" id="BPMNShape_gauge-general-interest-in-the-product">
+                <dc:Bounds height="60.0" width="120.0" x="1040.0" y="120.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="gt-0" id="BPMNShape_gt-0">
+                <dc:Bounds height="60.0" width="60.0" x="1270.0" y="120.0"/>
+                <bpmndi:BPMNLabel>
+                    <dc:Bounds height="60.0" width="60.0" x="1240.0" y="90.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="engage-customer-personally" id="BPMNShape_engage-customer-personally">
+                <dc:Bounds height="60.0" width="120.0" x="1440.0" y="20.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="customer-not-interested-or-budget-insignificant" id="BPMNShape_customer-not-interested-or-budget-insignificant">
+                <dc:Bounds height="30.0" width="30.0" x="1485.0" y="235.0"/>
+                <bpmndi:BPMNLabel>
+                    <dc:Bounds height="30.0" width="30.0" x="1485.0" y="280.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="conduct-detailed-online-presentation" id="BPMNShape_conduct-detailed-online-presentation">
+                <dc:Bounds height="60.0" width="120.0" x="1640.0" y="20.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="wait-for-customer-response" id="BPMNShape_wait-for-customer-response">
+                <dc:Bounds height="60.0" width="120.0" x="1840.0" y="20.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="follow-up-with-customer" id="BPMNShape_follow-up-with-customer">
+                <dc:Bounds height="60.0" width="120.0" x="2040.0" y="20.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="create-quotation-for-customer" id="BPMNShape_create-quotation-for-customer">
+                <dc:Bounds height="60.0" width="120.0" x="2240.0" y="20.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="quotation-created-and-presented" id="BPMNShape_quotation-created-and-presented">
+                <dc:Bounds height="30.0" width="30.0" x="2485.0" y="35.0"/>
+                <bpmndi:BPMNLabel>
+                    <dc:Bounds height="30.0" width="30.0" x="2485.0" y="80.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNEdge bpmnElement="sq-0" id="BPMNEdge_sq-0">
+                <di:waypoint x="115.0" y="150.0"/>
+                <di:waypoint x="240.0" y="150.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-1" id="BPMNEdge_sq-1">
+                <di:waypoint x="360.0" y="150.0"/>
+                <di:waypoint x="440.0" y="150.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-2" id="BPMNEdge_sq-2">
+                <di:waypoint x="560.0" y="150.0"/>
+                <di:waypoint x="640.0" y="150.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-3" id="BPMNEdge_sq-3">
+                <di:waypoint x="760.0" y="150.0"/>
+                <di:waypoint x="840.0" y="150.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-4" id="BPMNEdge_sq-4">
+                <di:waypoint x="960.0" y="150.0"/>
+                <di:waypoint x="1040.0" y="150.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-6" id="BPMNEdge_sq-6">
+                <di:waypoint x="1560.0" y="50.0"/>
+                <di:waypoint x="1640.0" y="50.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-7" id="BPMNEdge_sq-7">
+                <di:waypoint x="1760.0" y="50.0"/>
+                <di:waypoint x="1840.0" y="50.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-8" id="BPMNEdge_sq-8">
+                <di:waypoint x="1960.0" y="50.0"/>
+                <di:waypoint x="2040.0" y="50.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-9" id="BPMNEdge_sq-9">
+                <di:waypoint x="2160.0" y="50.0"/>
+                <di:waypoint x="2240.0" y="50.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-10" id="BPMNEdge_sq-10">
+                <di:waypoint x="2360.0" y="50.0"/>
+                <di:waypoint x="2485.0" y="50.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-11" id="BPMNEdge_sq-11">
+                <di:waypoint x="1160.0" y="150.0"/>
+                <di:waypoint x="1270.0" y="150.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-12" id="BPMNEdge_sq-12">
+                <di:waypoint x="1300.0" y="120.0"/>
+                <di:waypoint x="1300.0" y="50.0"/>
+                <di:waypoint x="1440.0" y="50.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-13" id="BPMNEdge_sq-13">
+                <di:waypoint x="1300.0" y="180.0"/>
+                <di:waypoint x="1300.0" y="250.0"/>
+                <di:waypoint x="1485.0" y="250.0"/>
+            </bpmndi:BPMNEdge>
+        </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</semantic:definitions>

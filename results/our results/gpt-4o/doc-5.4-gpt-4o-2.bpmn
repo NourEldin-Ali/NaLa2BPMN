@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><semantic:definitions xmlns:semantic="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" exporter="bpmn-js (https://demo.bpmn.io)" exporterVersion="17.7.1" targetNamespace="http://org.openbpmn">
+  <semantic:process id="process_1" name="Default Process" processType="Public">
+    <semantic:startEvent id="expense-not-submitted" name="Expense not submitted ">
+      <semantic:outgoing>sq-0</semantic:outgoing>
+    </semantic:startEvent>
+    <semantic:userTask id="purchase-product-or-service" name="Purchase product or service ">
+      <semantic:incoming>sq-0</semantic:incoming>
+      <semantic:outgoing>sq-1</semantic:outgoing>
+    </semantic:userTask>
+    <semantic:sequenceFlow id="sq-0" sourceRef="expense-not-submitted" targetRef="purchase-product-or-service"/>
+    <semantic:userTask id="submit-expense-report" name="Submit expense report ">
+      <semantic:incoming>sq-1</semantic:incoming>
+      <semantic:outgoing>sq-5</semantic:outgoing>
+    </semantic:userTask>
+    <semantic:sequenceFlow id="sq-1" sourceRef="purchase-product-or-service" targetRef="submit-expense-report"/>
+    <semantic:userTask id="review-expense-report" name=" Review expense report">
+      <semantic:incoming>Flow_0idellz</semantic:incoming>
+      <semantic:outgoing>sq-19</semantic:outgoing>
+    </semantic:userTask>
+    <semantic:userTask id="approve-expense-report" name="Approve expense report ">
+      <semantic:incoming>sq-18</semantic:incoming>
+      <semantic:outgoing>sq-17</semantic:outgoing>
+    </semantic:userTask>
+    <semantic:userTask id="send-report-back-for-corrections" name="Send report back for corrections ">
+      <semantic:incoming>sq-16</semantic:incoming>
+      <semantic:outgoing>sq-4</semantic:outgoing>
+    </semantic:userTask>
+    <semantic:exclusiveGateway gatewayDirection="Diverging" id="gt-0" name="">
+      <semantic:incoming>sq-4</semantic:incoming>
+      <semantic:incoming>sq-5</semantic:incoming>
+      <semantic:outgoing>Flow_156ipg6</semantic:outgoing>
+    </semantic:exclusiveGateway>
+    <semantic:sequenceFlow id="sq-4" sourceRef="send-report-back-for-corrections" targetRef="gt-0"/>
+    <semantic:sequenceFlow id="sq-5" sourceRef="submit-expense-report" targetRef="gt-0"/>
+    <semantic:userTask id="reject-expense-report" name="Reject expense report ">
+      <semantic:incoming>sq-20</semantic:incoming>
+      <semantic:outgoing>sq-7</semantic:outgoing>
+    </semantic:userTask>
+    <semantic:userTask id="edit-expense-report" name="Edit expense report ">
+      <semantic:incoming>sq-7</semantic:incoming>
+      <semantic:outgoing>sq-8</semantic:outgoing>
+    </semantic:userTask>
+    <semantic:sequenceFlow id="sq-7" sourceRef="reject-expense-report" targetRef="edit-expense-report"/>
+    <semantic:userTask id="resubmit-expense-report" name="Resubmit expense report ">
+      <semantic:incoming>sq-8</semantic:incoming>
+      <semantic:outgoing>Flow_1xhwto8</semantic:outgoing>
+    </semantic:userTask>
+    <semantic:sequenceFlow id="sq-8" sourceRef="edit-expense-report" targetRef="resubmit-expense-report"/>
+    <semantic:serviceTask id="wait-for-payment-confirmation" name="Wait for payment confirmation ">
+      <semantic:incoming>sq-13</semantic:incoming>
+      <semantic:outgoing>sq-9</semantic:outgoing>
+    </semantic:serviceTask>
+    <semantic:endEvent id="payment-confirmed" name=" Payment confirmed">
+      <semantic:incoming>sq-9</semantic:incoming>
+    </semantic:endEvent>
+    <semantic:sequenceFlow id="sq-9" sourceRef="wait-for-payment-confirmation" targetRef="payment-confirmed"/>
+    <semantic:userTask id="forward-expense-report" name="Forward expense report ">
+      <semantic:incoming>sq-17</semantic:incoming>
+      <semantic:outgoing>sq-10</semantic:outgoing>
+    </semantic:userTask>
+    <semantic:userTask id="check-receipts" name="Check receipts ">
+      <semantic:incoming>sq-10</semantic:incoming>
+      <semantic:outgoing>sq-14</semantic:outgoing>
+    </semantic:userTask>
+    <semantic:sequenceFlow id="sq-10" sourceRef="forward-expense-report" targetRef="check-receipts"/>
+    <semantic:userTask id="accept-expenses-for-processing" name="Accept expenses for processing ">
+      <semantic:incoming>sq-15</semantic:incoming>
+      <semantic:outgoing>sq-12</semantic:outgoing>
+    </semantic:userTask>
+    <semantic:serviceTask id="link-to-payment-system" name="Link to payment system ">
+      <semantic:incoming>sq-12</semantic:incoming>
+      <semantic:outgoing>sq-13</semantic:outgoing>
+    </semantic:serviceTask>
+    <semantic:sequenceFlow id="sq-12" sourceRef="accept-expenses-for-processing" targetRef="link-to-payment-system"/>
+    <semantic:sequenceFlow id="sq-13" sourceRef="link-to-payment-system" targetRef="wait-for-payment-confirmation"/>
+    <semantic:exclusiveGateway gatewayDirection="Diverging" id="gt-1" name="">
+      <semantic:incoming>sq-14</semantic:incoming>
+      <semantic:outgoing>sq-15</semantic:outgoing>
+      <semantic:outgoing>sq-16</semantic:outgoing>
+    </semantic:exclusiveGateway>
+    <semantic:sequenceFlow id="sq-14" sourceRef="check-receipts" targetRef="gt-1"/>
+    <semantic:sequenceFlow id="sq-15" sourceRef="gt-1" targetRef="accept-expenses-for-processing"/>
+    <semantic:sequenceFlow id="sq-16" sourceRef="gt-1" targetRef="send-report-back-for-corrections"/>
+    <semantic:sequenceFlow id="sq-17" sourceRef="approve-expense-report" targetRef="forward-expense-report"/>
+    <semantic:exclusiveGateway gatewayDirection="Diverging" id="gt-2" name="">
+      <semantic:incoming>sq-19</semantic:incoming>
+      <semantic:outgoing>sq-18</semantic:outgoing>
+      <semantic:outgoing>sq-20</semantic:outgoing>
+    </semantic:exclusiveGateway>
+    <semantic:sequenceFlow id="sq-18" sourceRef="gt-2" targetRef="approve-expense-report"/>
+    <semantic:sequenceFlow id="sq-19" sourceRef="review-expense-report" targetRef="gt-2"/>
+    <semantic:sequenceFlow id="sq-20" sourceRef="gt-2" targetRef="reject-expense-report"/>
+    <semantic:exclusiveGateway gatewayDirection="Diverging" id="Gateway_0wwon1c" name="">
+      <semantic:incoming>Flow_156ipg6</semantic:incoming>
+      <semantic:incoming>Flow_1xhwto8</semantic:incoming>
+      <semantic:outgoing>Flow_0idellz</semantic:outgoing>
+    </semantic:exclusiveGateway>
+    <semantic:sequenceFlow id="Flow_156ipg6" sourceRef="gt-0" targetRef="Gateway_0wwon1c"/>
+    <semantic:sequenceFlow id="Flow_0idellz" sourceRef="Gateway_0wwon1c" targetRef="review-expense-report"/>
+    <semantic:sequenceFlow id="Flow_1xhwto8" sourceRef="resubmit-expense-report" targetRef="Gateway_0wwon1c"/>
+  </semantic:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane bpmnElement="process_1" id="BPMNPlane_1">
+      <bpmndi:BPMNShape bpmnElement="expense-not-submitted" id="BPMNShape_expense-not-submitted">
+        <dc:Bounds height="30" width="30" x="175" y="195"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="27" width="63" x="159" y="240"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="purchase-product-or-service" id="BPMNShape_purchase-product-or-service">
+        <dc:Bounds height="60" width="120" x="330" y="180"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="submit-expense-report" id="BPMNShape_submit-expense-report">
+        <dc:Bounds height="60" width="120" x="530" y="180"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="review-expense-report" id="BPMNShape_review-expense-report">
+        <dc:Bounds height="60" width="120" x="930" y="380"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="approve-expense-report" id="BPMNShape_approve-expense-report">
+        <dc:Bounds height="60" width="120" x="1330" y="280"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="send-report-back-for-corrections" id="BPMNShape_send-report-back-for-corrections">
+        <dc:Bounds height="60" width="120" x="930" y="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="gt-0" id="BPMNShape_gt-0" isMarkerVisible="true">
+        <dc:Bounds height="60" width="60" x="760" y="180"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="60" width="60" x="640" y="90"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="reject-expense-report" id="BPMNShape_reject-expense-report">
+        <dc:Bounds height="60" width="120" x="1330" y="480"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="edit-expense-report" id="BPMNShape_edit-expense-report">
+        <dc:Bounds height="60" width="120" x="1530" y="480"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="resubmit-expense-report" id="BPMNShape_resubmit-expense-report">
+        <dc:Bounds height="60" width="120" x="1730" y="480"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="wait-for-payment-confirmation" id="BPMNShape_wait-for-payment-confirmation">
+        <dc:Bounds height="60" width="120" x="2530" y="180"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="payment-confirmed" id="BPMNShape_payment-confirmed">
+        <dc:Bounds height="30" width="30" x="2775" y="195"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="27" width="83" x="2749" y="240"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="forward-expense-report" id="BPMNShape_forward-expense-report">
+        <dc:Bounds height="60" width="120" x="1530" y="280"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="check-receipts" id="BPMNShape_check-receipts">
+        <dc:Bounds height="60" width="120" x="1730" y="280"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="accept-expenses-for-processing" id="BPMNShape_accept-expenses-for-processing">
+        <dc:Bounds height="60" width="120" x="2130" y="180"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="link-to-payment-system" id="BPMNShape_link-to-payment-system">
+        <dc:Bounds height="60" width="120" x="2330" y="180"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="gt-1" id="BPMNShape_gt-1" isMarkerVisible="true">
+        <dc:Bounds height="60" width="60" x="1960" y="180"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="60" width="60" x="1840" y="90"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="gt-2" id="BPMNShape_gt-2" isMarkerVisible="true">
+        <dc:Bounds height="60" width="60" x="1160" y="380"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="60" width="60" x="1040" y="290"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="Gateway_0wwon1c" id="BPMNShape_1hf6rvj" isMarkerVisible="true">
+        <dc:Bounds height="60" width="60" x="760" y="380"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="60" width="60" x="640" y="90"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="sq-0" id="BPMNEdge_sq-0">
+        <di:waypoint x="205" y="210"/>
+        <di:waypoint x="330" y="210"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sq-1" id="BPMNEdge_sq-1">
+        <di:waypoint x="450" y="210"/>
+        <di:waypoint x="530" y="210"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sq-4" id="BPMNEdge_sq-4">
+        <di:waypoint x="930" y="110"/>
+        <di:waypoint x="790" y="110"/>
+        <di:waypoint x="790" y="180"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sq-5" id="BPMNEdge_sq-5">
+        <di:waypoint x="650" y="210"/>
+        <di:waypoint x="760" y="210"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sq-7" id="BPMNEdge_sq-7">
+        <di:waypoint x="1450" y="510"/>
+        <di:waypoint x="1530" y="510"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sq-8" id="BPMNEdge_sq-8">
+        <di:waypoint x="1650" y="510"/>
+        <di:waypoint x="1730" y="510"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sq-9" id="BPMNEdge_sq-9">
+        <di:waypoint x="2650" y="210"/>
+        <di:waypoint x="2775" y="210"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sq-10" id="BPMNEdge_sq-10">
+        <di:waypoint x="1650" y="310"/>
+        <di:waypoint x="1730" y="310"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sq-12" id="BPMNEdge_sq-12">
+        <di:waypoint x="2250" y="210"/>
+        <di:waypoint x="2330" y="210"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sq-13" id="BPMNEdge_sq-13">
+        <di:waypoint x="2450" y="210"/>
+        <di:waypoint x="2530" y="210"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sq-14" id="BPMNEdge_sq-14">
+        <di:waypoint x="1850" y="310"/>
+        <di:waypoint x="1990" y="310"/>
+        <di:waypoint x="1990" y="240"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sq-15" id="BPMNEdge_sq-15">
+        <di:waypoint x="2020" y="210"/>
+        <di:waypoint x="2130" y="210"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sq-16" id="BPMNEdge_sq-16">
+        <di:waypoint x="1990" y="180"/>
+        <di:waypoint x="1990" y="110"/>
+        <di:waypoint x="1050" y="110"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sq-17" id="BPMNEdge_sq-17">
+        <di:waypoint x="1450" y="310"/>
+        <di:waypoint x="1530" y="310"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sq-18" id="BPMNEdge_sq-18">
+        <di:waypoint x="1190" y="380"/>
+        <di:waypoint x="1190" y="310"/>
+        <di:waypoint x="1330" y="310"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sq-19" id="BPMNEdge_sq-19">
+        <di:waypoint x="1050" y="410"/>
+        <di:waypoint x="1160" y="410"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sq-20" id="BPMNEdge_sq-20">
+        <di:waypoint x="1190" y="440"/>
+        <di:waypoint x="1190" y="510"/>
+        <di:waypoint x="1330" y="510"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="Flow_156ipg6" id="Flow_156ipg6_di">
+        <di:waypoint x="790" y="240"/>
+        <di:waypoint x="790" y="380"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="Flow_0idellz" id="Flow_0idellz_di">
+        <di:waypoint x="820" y="410"/>
+        <di:waypoint x="930" y="410"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="Flow_1xhwto8" id="Flow_1xhwto8_di">
+        <di:waypoint x="1790" y="540"/>
+        <di:waypoint x="1790" y="620"/>
+        <di:waypoint x="790" y="620"/>
+        <di:waypoint x="790" y="440"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</semantic:definitions>

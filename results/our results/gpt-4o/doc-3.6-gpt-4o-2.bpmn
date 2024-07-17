@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><semantic:definitions xmlns:semantic="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" exporter="demo" exporterVersion="1.0.0" targetNamespace="http://org.openbpmn">
+    <semantic:process id="process_1" name="Default Process" processType="Public">
+        <semantic:startEvent id="claim-not-received" name="Claim not received ">
+            <semantic:outgoing>sq-0</semantic:outgoing>
+        </semantic:startEvent>
+        <semantic:userTask id="receive-claim" name="Receive claim ">
+            <semantic:incoming>sq-0</semantic:incoming>
+            <semantic:outgoing>sq-1</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:sequenceFlow id="sq-0" sourceRef="claim-not-received" targetRef="receive-claim"/>
+        <semantic:userTask id="check-claimant-insurance-status" name="Check claimant insurance status ">
+            <semantic:incoming>sq-1</semantic:incoming>
+            <semantic:outgoing>sq-19</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:sequenceFlow id="sq-1" sourceRef="receive-claim" targetRef="check-claimant-insurance-status"/>
+        <semantic:userTask id="evaluate-claim-severity" name="Evaluate claim severity ">
+            <semantic:incoming>sq-20</semantic:incoming>
+            <semantic:outgoing>sq-13</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:userTask id="categorize-claim-as-complex" name="Categorize claim as complex ">
+            <semantic:incoming>sq-14</semantic:incoming>
+            <semantic:outgoing>sq-17</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:userTask id="send-relevant-forms-to-claimant" name="Send relevant forms to claimant ">
+            <semantic:incoming>sq-18</semantic:incoming>
+            <semantic:outgoing>sq-5</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:userTask id="return-forms" name="Return forms ">
+            <semantic:incoming>sq-5</semantic:incoming>
+            <semantic:outgoing>sq-23</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:sequenceFlow id="sq-5" sourceRef="send-relevant-forms-to-claimant" targetRef="return-forms"/>
+        <semantic:userTask id="check-forms-for-completeness" name=" Check forms for completeness">
+            <semantic:incoming>sq-24</semantic:incoming>
+            <semantic:outgoing>sq-9</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:serviceTask id="register-claim" name="Register claim ">
+            <semantic:incoming>sq-10</semantic:incoming>
+            <semantic:outgoing>sq-8</semantic:outgoing>
+        </semantic:serviceTask>
+        <semantic:endEvent id="claim-registered" name=" Claim registered">
+            <semantic:incoming>sq-8</semantic:incoming>
+        </semantic:endEvent>
+        <semantic:sequenceFlow id="sq-8" sourceRef="register-claim" targetRef="claim-registered"/>
+        <semantic:userTask id="inform-claimant-to-update-forms" name="Inform claimant to update forms ">
+            <semantic:incoming>sq-11</semantic:incoming>
+            <semantic:outgoing>sq-12</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:exclusiveGateway gatewayDirection="Diverging" id="gt-0" name="">
+            <semantic:incoming>sq-9</semantic:incoming>
+            <semantic:outgoing>sq-10</semantic:outgoing>
+            <semantic:outgoing>sq-11</semantic:outgoing>
+        </semantic:exclusiveGateway>
+        <semantic:sequenceFlow id="sq-9" sourceRef="check-forms-for-completeness" targetRef="gt-0"/>
+        <semantic:sequenceFlow id="sq-10" sourceRef="gt-0" targetRef="register-claim"/>
+        <semantic:sequenceFlow id="sq-11" sourceRef="gt-0" targetRef="inform-claimant-to-update-forms"/>
+        <semantic:userTask id="update-forms" name="Update forms ">
+            <semantic:incoming>sq-12</semantic:incoming>
+            <semantic:outgoing>sq-25</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:sequenceFlow id="sq-12" sourceRef="inform-claimant-to-update-forms" targetRef="update-forms"/>
+        <semantic:userTask id="categorize-claim-as-simple" name="Categorize claim as simple ">
+            <semantic:incoming>sq-15</semantic:incoming>
+            <semantic:outgoing>sq-16</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:parallelGateway gatewayDirection="Diverging" id="gt-1" name="">
+            <semantic:incoming>sq-13</semantic:incoming>
+            <semantic:outgoing>sq-14</semantic:outgoing>
+            <semantic:outgoing>sq-15</semantic:outgoing>
+        </semantic:parallelGateway>
+        <semantic:sequenceFlow id="sq-13" sourceRef="evaluate-claim-severity" targetRef="gt-1"/>
+        <semantic:sequenceFlow id="sq-14" sourceRef="gt-1" targetRef="categorize-claim-as-complex"/>
+        <semantic:sequenceFlow id="sq-15" sourceRef="gt-1" targetRef="categorize-claim-as-simple"/>
+        <semantic:parallelGateway gatewayDirection="Diverging" id="gt-2" name="">
+            <semantic:incoming>sq-16</semantic:incoming>
+            <semantic:incoming>sq-17</semantic:incoming>
+            <semantic:outgoing>sq-18</semantic:outgoing>
+        </semantic:parallelGateway>
+        <semantic:sequenceFlow id="sq-16" sourceRef="categorize-claim-as-simple" targetRef="gt-2"/>
+        <semantic:sequenceFlow id="sq-17" sourceRef="categorize-claim-as-complex" targetRef="gt-2"/>
+        <semantic:sequenceFlow id="sq-18" sourceRef="gt-2" targetRef="send-relevant-forms-to-claimant"/>
+        <semantic:userTask id="inform-claimant-of-rejection" name="Inform claimant of rejection ">
+            <semantic:incoming>sq-21</semantic:incoming>
+            <semantic:outgoing>sq-22</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:exclusiveGateway gatewayDirection="Diverging" id="gt-3" name="">
+            <semantic:incoming>sq-19</semantic:incoming>
+            <semantic:outgoing>sq-20</semantic:outgoing>
+            <semantic:outgoing>sq-21</semantic:outgoing>
+        </semantic:exclusiveGateway>
+        <semantic:sequenceFlow id="sq-19" sourceRef="check-claimant-insurance-status" targetRef="gt-3"/>
+        <semantic:sequenceFlow id="sq-20" sourceRef="gt-3" targetRef="evaluate-claim-severity"/>
+        <semantic:sequenceFlow id="sq-21" sourceRef="gt-3" targetRef="inform-claimant-of-rejection"/>
+        <semantic:endEvent id="claimant-informed-of-rejection" name=" Claimant informed of rejection">
+            <semantic:incoming>sq-22</semantic:incoming>
+        </semantic:endEvent>
+        <semantic:sequenceFlow id="sq-22" sourceRef="inform-claimant-of-rejection" targetRef="claimant-informed-of-rejection"/>
+        <semantic:exclusiveGateway gatewayDirection="Diverging" id="gt-4" name="">
+            <semantic:incoming>sq-23</semantic:incoming>
+            <semantic:incoming>sq-25</semantic:incoming>
+            <semantic:outgoing>sq-24</semantic:outgoing>
+        </semantic:exclusiveGateway>
+        <semantic:sequenceFlow id="sq-23" sourceRef="return-forms" targetRef="gt-4"/>
+        <semantic:sequenceFlow id="sq-24" sourceRef="gt-4" targetRef="check-forms-for-completeness"/>
+        <semantic:sequenceFlow id="sq-25" sourceRef="update-forms" targetRef="gt-4"/>
+    </semantic:process>
+    <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+        <bpmndi:BPMNPlane bpmnElement="process_1" id="BPMNPlane_1">
+            <bpmndi:BPMNShape bpmnElement="evaluate-claim-severity" id="BPMNShape_evaluate-claim-severity">
+                <dc:Bounds height="60.0" width="120.0" x="840.0" y="120.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="gt-1" id="BPMNShape_gt-1">
+                <dc:Bounds height="60.0" width="60.0" x="1070.0" y="120.0"/>
+                <bpmndi:BPMNLabel>
+                    <dc:Bounds height="60.0" width="60.0" x="1040.0" y="90.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="gt-2" id="BPMNShape_gt-2">
+                <dc:Bounds height="60.0" width="60.0" x="1470.0" y="120.0"/>
+                <bpmndi:BPMNLabel>
+                    <dc:Bounds height="60.0" width="60.0" x="1440.0" y="90.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="send-relevant-forms-to-claimant" id="BPMNShape_send-relevant-forms-to-claimant">
+                <dc:Bounds height="60.0" width="120.0" x="1640.0" y="120.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="return-forms" id="BPMNShape_return-forms">
+                <dc:Bounds height="60.0" width="120.0" x="1840.0" y="120.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="gt-4" id="BPMNShape_gt-4">
+                <dc:Bounds height="60.0" width="60.0" x="2070.0" y="120.0"/>
+                <bpmndi:BPMNLabel>
+                    <dc:Bounds height="60.0" width="60.0" x="2040.0" y="90.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="check-forms-for-completeness" id="BPMNShape_check-forms-for-completeness">
+                <dc:Bounds height="60.0" width="120.0" x="2240.0" y="20.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="gt-0" id="BPMNShape_gt-0">
+                <dc:Bounds height="60.0" width="60.0" x="2670.0" y="120.0"/>
+                <bpmndi:BPMNLabel>
+                    <dc:Bounds height="60.0" width="60.0" x="2640.0" y="90.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="register-claim" id="BPMNShape_register-claim">
+                <dc:Bounds height="60.0" width="120.0" x="2840.0" y="120.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="claim-registered" id="BPMNShape_claim-registered">
+                <dc:Bounds height="30.0" width="30.0" x="3085.0" y="135.0"/>
+                <bpmndi:BPMNLabel>
+                    <dc:Bounds height="30.0" width="30.0" x="3085.0" y="180.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="categorize-claim-as-complex" id="BPMNShape_categorize-claim-as-complex">
+                <dc:Bounds height="60.0" width="120.0" x="1240.0" y="20.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="claim-not-received" id="BPMNShape_claim-not-received">
+                <dc:Bounds height="30.0" width="30.0" x="85.0" y="235.0"/>
+                <bpmndi:BPMNLabel>
+                    <dc:Bounds height="30.0" width="30.0" x="85.0" y="280.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="receive-claim" id="BPMNShape_receive-claim">
+                <dc:Bounds height="60.0" width="120.0" x="240.0" y="220.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="check-claimant-insurance-status" id="BPMNShape_check-claimant-insurance-status">
+                <dc:Bounds height="60.0" width="120.0" x="440.0" y="220.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="gt-3" id="BPMNShape_gt-3">
+                <dc:Bounds height="60.0" width="60.0" x="670.0" y="220.0"/>
+                <bpmndi:BPMNLabel>
+                    <dc:Bounds height="60.0" width="60.0" x="640.0" y="190.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="inform-claimant-of-rejection" id="BPMNShape_inform-claimant-of-rejection">
+                <dc:Bounds height="60.0" width="120.0" x="840.0" y="320.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="claimant-informed-of-rejection" id="BPMNShape_claimant-informed-of-rejection">
+                <dc:Bounds height="30.0" width="30.0" x="1085.0" y="335.0"/>
+                <bpmndi:BPMNLabel>
+                    <dc:Bounds height="30.0" width="30.0" x="1085.0" y="380.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="categorize-claim-as-simple" id="BPMNShape_categorize-claim-as-simple">
+                <dc:Bounds height="60.0" width="120.0" x="1240.0" y="220.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="update-forms" id="BPMNShape_update-forms">
+                <dc:Bounds height="60.0" width="120.0" x="2240.0" y="220.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="inform-claimant-to-update-forms" id="BPMNShape_inform-claimant-to-update-forms">
+                <dc:Bounds height="60.0" width="120.0" x="2440.0" y="220.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNEdge bpmnElement="sq-0" id="BPMNEdge_sq-0">
+                <di:waypoint x="115.0" y="250.0"/>
+                <di:waypoint x="240.0" y="250.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-1" id="BPMNEdge_sq-1">
+                <di:waypoint x="360.0" y="250.0"/>
+                <di:waypoint x="440.0" y="250.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-5" id="BPMNEdge_sq-5">
+                <di:waypoint x="1760.0" y="150.0"/>
+                <di:waypoint x="1840.0" y="150.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-8" id="BPMNEdge_sq-8">
+                <di:waypoint x="2960.0" y="150.0"/>
+                <di:waypoint x="3085.0" y="150.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-9" id="BPMNEdge_sq-9">
+                <di:waypoint x="2360.0" y="50.0"/>
+                <di:waypoint x="2700.0" y="50.0"/>
+                <di:waypoint x="2700.0" y="120.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-10" id="BPMNEdge_sq-10">
+                <di:waypoint x="2730.0" y="150.0"/>
+                <di:waypoint x="2840.0" y="150.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-11" id="BPMNEdge_sq-11">
+                <di:waypoint x="2700.0" y="180.0"/>
+                <di:waypoint x="2700.0" y="250.0"/>
+                <di:waypoint x="2560.0" y="250.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-12" id="BPMNEdge_sq-12">
+                <di:waypoint x="2440.0" y="250.0"/>
+                <di:waypoint x="2360.0" y="250.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-13" id="BPMNEdge_sq-13">
+                <di:waypoint x="960.0" y="150.0"/>
+                <di:waypoint x="1070.0" y="150.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-14" id="BPMNEdge_sq-14">
+                <di:waypoint x="1100.0" y="120.0"/>
+                <di:waypoint x="1100.0" y="50.0"/>
+                <di:waypoint x="1240.0" y="50.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-15" id="BPMNEdge_sq-15">
+                <di:waypoint x="1100.0" y="180.0"/>
+                <di:waypoint x="1100.0" y="250.0"/>
+                <di:waypoint x="1240.0" y="250.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-16" id="BPMNEdge_sq-16">
+                <di:waypoint x="1360.0" y="250.0"/>
+                <di:waypoint x="1500.0" y="250.0"/>
+                <di:waypoint x="1500.0" y="180.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-17" id="BPMNEdge_sq-17">
+                <di:waypoint x="1360.0" y="50.0"/>
+                <di:waypoint x="1500.0" y="50.0"/>
+                <di:waypoint x="1500.0" y="120.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-18" id="BPMNEdge_sq-18">
+                <di:waypoint x="1530.0" y="150.0"/>
+                <di:waypoint x="1640.0" y="150.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-19" id="BPMNEdge_sq-19">
+                <di:waypoint x="560.0" y="250.0"/>
+                <di:waypoint x="670.0" y="250.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-20" id="BPMNEdge_sq-20">
+                <di:waypoint x="700.0" y="220.0"/>
+                <di:waypoint x="700.0" y="150.0"/>
+                <di:waypoint x="840.0" y="150.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-21" id="BPMNEdge_sq-21">
+                <di:waypoint x="700.0" y="280.0"/>
+                <di:waypoint x="700.0" y="350.0"/>
+                <di:waypoint x="840.0" y="350.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-22" id="BPMNEdge_sq-22">
+                <di:waypoint x="960.0" y="350.0"/>
+                <di:waypoint x="1085.0" y="350.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-23" id="BPMNEdge_sq-23">
+                <di:waypoint x="1960.0" y="150.0"/>
+                <di:waypoint x="2070.0" y="150.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-24" id="BPMNEdge_sq-24">
+                <di:waypoint x="2130.0" y="150.0"/>
+                <di:waypoint x="2300.0" y="150.0"/>
+                <di:waypoint x="2300.0" y="80.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-25" id="BPMNEdge_sq-25">
+                <di:waypoint x="2240.0" y="250.0"/>
+                <di:waypoint x="2100.0" y="250.0"/>
+                <di:waypoint x="2100.0" y="180.0"/>
+            </bpmndi:BPMNEdge>
+        </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</semantic:definitions>

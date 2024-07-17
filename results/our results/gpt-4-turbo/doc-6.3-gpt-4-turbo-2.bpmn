@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><semantic:definitions xmlns:semantic="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" exporter="demo" exporterVersion="1.0.0" targetNamespace="http://org.openbpmn">
+    <semantic:process id="process_1" name="Default Process" processType="Public">
+        <semantic:startEvent id="order-received" name="Order received ">
+            <semantic:outgoing>sq-0</semantic:outgoing>
+        </semantic:startEvent>
+        <semantic:userTask id="receive-new-order" name="Receive new order ">
+            <semantic:incoming>sq-0</semantic:incoming>
+            <semantic:outgoing>sq-1</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:sequenceFlow id="sq-0" sourceRef="order-received" targetRef="receive-new-order"/>
+        <semantic:userTask id="assess-order" name="Assess order ">
+            <semantic:incoming>sq-1</semantic:incoming>
+            <semantic:outgoing>sq-2</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:sequenceFlow id="sq-1" sourceRef="receive-new-order" targetRef="assess-order"/>
+        <semantic:userTask id="enter-information-into-pps" name="Enter information into pps ">
+            <semantic:incoming>sq-2</semantic:incoming>
+            <semantic:outgoing>sq-3</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:sequenceFlow id="sq-2" sourceRef="assess-order" targetRef="enter-information-into-pps"/>
+        <semantic:serviceTask id="generate-parts-list" name="Generate parts list ">
+            <semantic:incoming>sq-3</semantic:incoming>
+            <semantic:outgoing>sq-4</semantic:outgoing>
+        </semantic:serviceTask>
+        <semantic:sequenceFlow id="sq-3" sourceRef="enter-information-into-pps" targetRef="generate-parts-list"/>
+        <semantic:userTask id="transfer-data-to-erp" name="Transfer data to erp ">
+            <semantic:incoming>sq-4</semantic:incoming>
+            <semantic:outgoing>sq-5</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:sequenceFlow id="sq-4" sourceRef="generate-parts-list" targetRef="transfer-data-to-erp"/>
+        <semantic:userTask id="decide-on-parts-procurement" name="Decide on parts procurement ">
+            <semantic:incoming>sq-5</semantic:incoming>
+            <semantic:outgoing>sq-22</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:sequenceFlow id="sq-5" sourceRef="transfer-data-to-erp" targetRef="decide-on-parts-procurement"/>
+        <semantic:userTask id="initiate-procurement-process" name="Initiate procurement process ">
+            <semantic:incoming>sq-21</semantic:incoming>
+            <semantic:outgoing>sq-18</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:userTask id="schedule-production" name="Schedule production ">
+            <semantic:incoming>sq-19</semantic:incoming>
+            <semantic:outgoing>sq-8</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:serviceTask id="send-production-notification" name="Send production notification ">
+            <semantic:incoming>sq-8</semantic:incoming>
+            <semantic:outgoing>sq-9</semantic:outgoing>
+        </semantic:serviceTask>
+        <semantic:sequenceFlow id="sq-8" sourceRef="schedule-production" targetRef="send-production-notification"/>
+        <semantic:userTask id="assign-employee-to-production" name="Assign employee to production ">
+            <semantic:incoming>sq-9</semantic:incoming>
+            <semantic:outgoing>sq-10</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:sequenceFlow id="sq-9" sourceRef="send-production-notification" targetRef="assign-employee-to-production"/>
+        <semantic:userTask id="perform-production" name="Perform production ">
+            <semantic:incoming>sq-10</semantic:incoming>
+            <semantic:outgoing>sq-11</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:sequenceFlow id="sq-10" sourceRef="assign-employee-to-production" targetRef="perform-production"/>
+        <semantic:userTask id="conduct-final-quality-check" name="Conduct final quality check ">
+            <semantic:incoming>sq-11</semantic:incoming>
+            <semantic:outgoing>sq-14</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:sequenceFlow id="sq-11" sourceRef="perform-production" targetRef="conduct-final-quality-check"/>
+        <semantic:userTask id="take-corrective-actions" name="Take corrective actions ">
+            <semantic:incoming>sq-15</semantic:incoming>
+            <semantic:outgoing>sq-13</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:endEvent id="corrective-actions-resolved" name=" Corrective actions resolved">
+            <semantic:incoming>sq-13</semantic:incoming>
+        </semantic:endEvent>
+        <semantic:sequenceFlow id="sq-13" sourceRef="take-corrective-actions" targetRef="corrective-actions-resolved"/>
+        <semantic:endEvent id="order-ready-for-delivery" name=" Order ready for delivery">
+            <semantic:incoming>sq-16</semantic:incoming>
+        </semantic:endEvent>
+        <semantic:exclusiveGateway gatewayDirection="Diverging" id="gt-0" name="">
+            <semantic:incoming>sq-14</semantic:incoming>
+            <semantic:outgoing>sq-15</semantic:outgoing>
+            <semantic:outgoing>sq-16</semantic:outgoing>
+        </semantic:exclusiveGateway>
+        <semantic:sequenceFlow id="sq-14" sourceRef="conduct-final-quality-check" targetRef="gt-0"/>
+        <semantic:sequenceFlow id="sq-15" sourceRef="gt-0" targetRef="take-corrective-actions"/>
+        <semantic:sequenceFlow id="sq-16" sourceRef="gt-0" targetRef="order-ready-for-delivery"/>
+        <semantic:exclusiveGateway gatewayDirection="Diverging" id="gt-1" name="">
+            <semantic:incoming>sq-18</semantic:incoming>
+            <semantic:incoming>sq-20</semantic:incoming>
+            <semantic:outgoing>sq-19</semantic:outgoing>
+        </semantic:exclusiveGateway>
+        <semantic:sequenceFlow id="sq-18" sourceRef="initiate-procurement-process" targetRef="gt-1"/>
+        <semantic:sequenceFlow id="sq-19" sourceRef="gt-1" targetRef="schedule-production"/>
+        <semantic:exclusiveGateway gatewayDirection="Diverging" id="gt-2" name="">
+            <semantic:incoming>sq-22</semantic:incoming>
+            <semantic:outgoing>sq-20</semantic:outgoing>
+            <semantic:outgoing>sq-21</semantic:outgoing>
+        </semantic:exclusiveGateway>
+        <semantic:sequenceFlow id="sq-20" sourceRef="gt-2" targetRef="gt-1"/>
+        <semantic:sequenceFlow id="sq-21" sourceRef="gt-2" targetRef="initiate-procurement-process"/>
+        <semantic:sequenceFlow id="sq-22" sourceRef="decide-on-parts-procurement" targetRef="gt-2"/>
+    </semantic:process>
+    <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+        <bpmndi:BPMNPlane bpmnElement="process_1" id="BPMNPlane_1">
+            <bpmndi:BPMNShape bpmnElement="gt-1" id="BPMNShape_gt-1">
+                <dc:Bounds height="60.0" width="60.0" x="1870.0" y="120.0"/>
+                <bpmndi:BPMNLabel>
+                    <dc:Bounds height="60.0" width="60.0" x="1840.0" y="90.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="schedule-production" id="BPMNShape_schedule-production">
+                <dc:Bounds height="60.0" width="120.0" x="2040.0" y="120.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="send-production-notification" id="BPMNShape_send-production-notification">
+                <dc:Bounds height="60.0" width="120.0" x="2240.0" y="120.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="assign-employee-to-production" id="BPMNShape_assign-employee-to-production">
+                <dc:Bounds height="60.0" width="120.0" x="2440.0" y="120.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="perform-production" id="BPMNShape_perform-production">
+                <dc:Bounds height="60.0" width="120.0" x="2640.0" y="120.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="conduct-final-quality-check" id="BPMNShape_conduct-final-quality-check">
+                <dc:Bounds height="60.0" width="120.0" x="2840.0" y="120.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="gt-0" id="BPMNShape_gt-0">
+                <dc:Bounds height="60.0" width="60.0" x="3070.0" y="120.0"/>
+                <bpmndi:BPMNLabel>
+                    <dc:Bounds height="60.0" width="60.0" x="3040.0" y="90.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="take-corrective-actions" id="BPMNShape_take-corrective-actions">
+                <dc:Bounds height="60.0" width="120.0" x="3240.0" y="20.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="corrective-actions-resolved" id="BPMNShape_corrective-actions-resolved">
+                <dc:Bounds height="30.0" width="30.0" x="3485.0" y="35.0"/>
+                <bpmndi:BPMNLabel>
+                    <dc:Bounds height="30.0" width="30.0" x="3485.0" y="80.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="order-received" id="BPMNShape_order-received">
+                <dc:Bounds height="30.0" width="30.0" x="85.0" y="35.0"/>
+                <bpmndi:BPMNLabel>
+                    <dc:Bounds height="30.0" width="30.0" x="85.0" y="80.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="receive-new-order" id="BPMNShape_receive-new-order">
+                <dc:Bounds height="60.0" width="120.0" x="240.0" y="20.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="assess-order" id="BPMNShape_assess-order">
+                <dc:Bounds height="60.0" width="120.0" x="440.0" y="20.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="enter-information-into-pps" id="BPMNShape_enter-information-into-pps">
+                <dc:Bounds height="60.0" width="120.0" x="640.0" y="20.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="generate-parts-list" id="BPMNShape_generate-parts-list">
+                <dc:Bounds height="60.0" width="120.0" x="840.0" y="20.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="transfer-data-to-erp" id="BPMNShape_transfer-data-to-erp">
+                <dc:Bounds height="60.0" width="120.0" x="1040.0" y="20.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="decide-on-parts-procurement" id="BPMNShape_decide-on-parts-procurement">
+                <dc:Bounds height="60.0" width="120.0" x="1240.0" y="20.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="gt-2" id="BPMNShape_gt-2">
+                <dc:Bounds height="60.0" width="60.0" x="1470.0" y="20.0"/>
+                <bpmndi:BPMNLabel>
+                    <dc:Bounds height="60.0" width="60.0" x="1440.0" y="-10.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="initiate-procurement-process" id="BPMNShape_initiate-procurement-process">
+                <dc:Bounds height="60.0" width="120.0" x="1640.0" y="220.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="order-ready-for-delivery" id="BPMNShape_order-ready-for-delivery">
+                <dc:Bounds height="30.0" width="30.0" x="3285.0" y="235.0"/>
+                <bpmndi:BPMNLabel>
+                    <dc:Bounds height="30.0" width="30.0" x="3285.0" y="280.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNEdge bpmnElement="sq-0" id="BPMNEdge_sq-0">
+                <di:waypoint x="115.0" y="50.0"/>
+                <di:waypoint x="240.0" y="50.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-1" id="BPMNEdge_sq-1">
+                <di:waypoint x="360.0" y="50.0"/>
+                <di:waypoint x="440.0" y="50.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-2" id="BPMNEdge_sq-2">
+                <di:waypoint x="560.0" y="50.0"/>
+                <di:waypoint x="640.0" y="50.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-3" id="BPMNEdge_sq-3">
+                <di:waypoint x="760.0" y="50.0"/>
+                <di:waypoint x="840.0" y="50.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-4" id="BPMNEdge_sq-4">
+                <di:waypoint x="960.0" y="50.0"/>
+                <di:waypoint x="1040.0" y="50.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-5" id="BPMNEdge_sq-5">
+                <di:waypoint x="1160.0" y="50.0"/>
+                <di:waypoint x="1240.0" y="50.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-8" id="BPMNEdge_sq-8">
+                <di:waypoint x="2160.0" y="150.0"/>
+                <di:waypoint x="2240.0" y="150.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-9" id="BPMNEdge_sq-9">
+                <di:waypoint x="2360.0" y="150.0"/>
+                <di:waypoint x="2440.0" y="150.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-10" id="BPMNEdge_sq-10">
+                <di:waypoint x="2560.0" y="150.0"/>
+                <di:waypoint x="2640.0" y="150.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-11" id="BPMNEdge_sq-11">
+                <di:waypoint x="2760.0" y="150.0"/>
+                <di:waypoint x="2840.0" y="150.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-13" id="BPMNEdge_sq-13">
+                <di:waypoint x="3360.0" y="50.0"/>
+                <di:waypoint x="3485.0" y="50.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-14" id="BPMNEdge_sq-14">
+                <di:waypoint x="2960.0" y="150.0"/>
+                <di:waypoint x="3070.0" y="150.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-15" id="BPMNEdge_sq-15">
+                <di:waypoint x="3100.0" y="120.0"/>
+                <di:waypoint x="3100.0" y="50.0"/>
+                <di:waypoint x="3240.0" y="50.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-16" id="BPMNEdge_sq-16">
+                <di:waypoint x="3100.0" y="180.0"/>
+                <di:waypoint x="3100.0" y="250.0"/>
+                <di:waypoint x="3285.0" y="250.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-18" id="BPMNEdge_sq-18">
+                <di:waypoint x="1760.0" y="250.0"/>
+                <di:waypoint x="1900.0" y="250.0"/>
+                <di:waypoint x="1900.0" y="180.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-19" id="BPMNEdge_sq-19">
+                <di:waypoint x="1930.0" y="150.0"/>
+                <di:waypoint x="2040.0" y="150.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-20" id="BPMNEdge_sq-20">
+                <di:waypoint x="1530.0" y="50.0"/>
+                <di:waypoint x="1900.0" y="50.0"/>
+                <di:waypoint x="1900.0" y="120.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-21" id="BPMNEdge_sq-21">
+                <di:waypoint x="1500.0" y="80.0"/>
+                <di:waypoint x="1500.0" y="250.0"/>
+                <di:waypoint x="1640.0" y="250.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-22" id="BPMNEdge_sq-22">
+                <di:waypoint x="1360.0" y="50.0"/>
+                <di:waypoint x="1470.0" y="50.0"/>
+            </bpmndi:BPMNEdge>
+        </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</semantic:definitions>

@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><semantic:definitions xmlns:semantic="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" exporter="demo" exporterVersion="1.0.0" targetNamespace="http://org.openbpmn">
+    <semantic:process id="process_1" name="Default Process" processType="Public">
+        <semantic:startEvent id="mail-awaiting-collection" name="Mail awaiting collection ">
+            <semantic:outgoing>sq-0</semantic:outgoing>
+        </semantic:startEvent>
+        <semantic:userTask id="collect-mail" name="Collect mail ">
+            <semantic:incoming>sq-0</semantic:incoming>
+            <semantic:outgoing>sq-1</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:sequenceFlow id="sq-0" sourceRef="mail-awaiting-collection" targetRef="collect-mail"/>
+        <semantic:userTask id="sort-unopened-mail" name="Sort unopened mail ">
+            <semantic:incoming>sq-1</semantic:incoming>
+            <semantic:outgoing>sq-2</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:sequenceFlow id="sq-1" sourceRef="collect-mail" targetRef="sort-unopened-mail"/>
+        <semantic:userTask id="distribute-mail" name="Distribute mail ">
+            <semantic:incoming>sq-2</semantic:incoming>
+            <semantic:outgoing>sq-3</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:sequenceFlow id="sq-2" sourceRef="sort-unopened-mail" targetRef="distribute-mail"/>
+        <semantic:userTask id="open-mail" name="Open mail ">
+            <semantic:incoming>sq-3</semantic:incoming>
+            <semantic:outgoing>sq-4</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:sequenceFlow id="sq-3" sourceRef="distribute-mail" targetRef="open-mail"/>
+        <semantic:userTask id="sort-mail-into-groups" name="Sort mail into groups ">
+            <semantic:incoming>sq-4</semantic:incoming>
+            <semantic:outgoing>sq-5</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:sequenceFlow id="sq-4" sourceRef="open-mail" targetRef="sort-mail-into-groups"/>
+        <semantic:userTask id="register-mail" name="Register mail ">
+            <semantic:incoming>sq-5</semantic:incoming>
+            <semantic:outgoing>sq-6</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:sequenceFlow id="sq-5" sourceRef="sort-mail-into-groups" targetRef="register-mail"/>
+        <semantic:userTask id="perform-quality-check" name="Perform quality check ">
+            <semantic:incoming>sq-6</semantic:incoming>
+            <semantic:outgoing>sq-15</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:sequenceFlow id="sq-6" sourceRef="register-mail" targetRef="perform-quality-check"/>
+        <semantic:userTask id="capture-matter-details" name="Capture matter details ">
+            <semantic:incoming>sq-16</semantic:incoming>
+            <semantic:outgoing>sq-8</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:userTask id="provide-matter-details" name="Provide matter details ">
+            <semantic:incoming>sq-8</semantic:incoming>
+            <semantic:outgoing>sq-9</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:sequenceFlow id="sq-8" sourceRef="capture-matter-details" targetRef="provide-matter-details"/>
+        <semantic:userTask id="take-applicable-fees" name="Take applicable fees ">
+            <semantic:incoming>sq-9</semantic:incoming>
+            <semantic:outgoing>sq-10</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:sequenceFlow id="sq-9" sourceRef="provide-matter-details" targetRef="take-applicable-fees"/>
+        <semantic:userTask id="capture-party-details" name="Capture party details ">
+            <semantic:incoming>sq-10</semantic:incoming>
+            <semantic:outgoing>sq-11</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:sequenceFlow id="sq-10" sourceRef="take-applicable-fees" targetRef="capture-party-details"/>
+        <semantic:userTask id="print-physical-court-file" name="Print physical court file ">
+            <semantic:incoming>sq-11</semantic:incoming>
+            <semantic:outgoing>sq-12</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:sequenceFlow id="sq-11" sourceRef="capture-party-details" targetRef="print-physical-court-file"/>
+        <semantic:userTask id="put-receipt-and-documents-into-envelope" name="Put receipt and documents into envelope ">
+            <semantic:incoming>sq-12</semantic:incoming>
+            <semantic:outgoing>sq-13</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:sequenceFlow id="sq-12" sourceRef="print-physical-court-file" targetRef="put-receipt-and-documents-into-envelope"/>
+        <semantic:userTask id="post-envelope-to-party" name="Post envelope to party ">
+            <semantic:incoming>sq-13</semantic:incoming>
+            <semantic:outgoing>sq-14</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:sequenceFlow id="sq-13" sourceRef="put-receipt-and-documents-into-envelope" targetRef="post-envelope-to-party"/>
+        <semantic:endEvent id="documents-and-receipt-posted" name=" Documents and receipt posted">
+            <semantic:incoming>sq-14</semantic:incoming>
+        </semantic:endEvent>
+        <semantic:sequenceFlow id="sq-14" sourceRef="post-envelope-to-party" targetRef="documents-and-receipt-posted"/>
+        <semantic:userTask id="compile-requisition-list" name="Compile requisition list ">
+            <semantic:incoming>sq-17</semantic:incoming>
+            <semantic:outgoing>sq-18</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:exclusiveGateway gatewayDirection="Diverging" id="gt-0" name="">
+            <semantic:incoming>sq-15</semantic:incoming>
+            <semantic:outgoing>sq-16</semantic:outgoing>
+            <semantic:outgoing>sq-17</semantic:outgoing>
+        </semantic:exclusiveGateway>
+        <semantic:sequenceFlow id="sq-15" sourceRef="perform-quality-check" targetRef="gt-0"/>
+        <semantic:sequenceFlow id="sq-16" sourceRef="gt-0" targetRef="capture-matter-details"/>
+        <semantic:sequenceFlow id="sq-17" sourceRef="gt-0" targetRef="compile-requisition-list"/>
+        <semantic:userTask id="send-requisition-list" name="Send requisition list ">
+            <semantic:incoming>sq-18</semantic:incoming>
+            <semantic:outgoing>sq-19</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:sequenceFlow id="sq-18" sourceRef="compile-requisition-list" targetRef="send-requisition-list"/>
+        <semantic:endEvent id="rejection-list-sent" name=" Rejection list sent">
+            <semantic:incoming>sq-19</semantic:incoming>
+        </semantic:endEvent>
+        <semantic:sequenceFlow id="sq-19" sourceRef="send-requisition-list" targetRef="rejection-list-sent"/>
+    </semantic:process>
+    <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+        <bpmndi:BPMNPlane bpmnElement="process_1" id="BPMNPlane_1">
+            <bpmndi:BPMNShape bpmnElement="mail-awaiting-collection" id="BPMNShape_mail-awaiting-collection">
+                <dc:Bounds height="30.0" width="30.0" x="85.0" y="135.0"/>
+                <bpmndi:BPMNLabel>
+                    <dc:Bounds height="30.0" width="30.0" x="85.0" y="180.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="collect-mail" id="BPMNShape_collect-mail">
+                <dc:Bounds height="60.0" width="120.0" x="240.0" y="120.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="sort-unopened-mail" id="BPMNShape_sort-unopened-mail">
+                <dc:Bounds height="60.0" width="120.0" x="440.0" y="120.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="distribute-mail" id="BPMNShape_distribute-mail">
+                <dc:Bounds height="60.0" width="120.0" x="640.0" y="120.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="open-mail" id="BPMNShape_open-mail">
+                <dc:Bounds height="60.0" width="120.0" x="840.0" y="120.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="sort-mail-into-groups" id="BPMNShape_sort-mail-into-groups">
+                <dc:Bounds height="60.0" width="120.0" x="1040.0" y="120.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="register-mail" id="BPMNShape_register-mail">
+                <dc:Bounds height="60.0" width="120.0" x="1240.0" y="120.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="perform-quality-check" id="BPMNShape_perform-quality-check">
+                <dc:Bounds height="60.0" width="120.0" x="1440.0" y="120.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="gt-0" id="BPMNShape_gt-0">
+                <dc:Bounds height="60.0" width="60.0" x="1670.0" y="120.0"/>
+                <bpmndi:BPMNLabel>
+                    <dc:Bounds height="60.0" width="60.0" x="1640.0" y="90.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="capture-matter-details" id="BPMNShape_capture-matter-details">
+                <dc:Bounds height="60.0" width="120.0" x="1840.0" y="20.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="compile-requisition-list" id="BPMNShape_compile-requisition-list">
+                <dc:Bounds height="60.0" width="120.0" x="1840.0" y="220.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="provide-matter-details" id="BPMNShape_provide-matter-details">
+                <dc:Bounds height="60.0" width="120.0" x="2040.0" y="20.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="send-requisition-list" id="BPMNShape_send-requisition-list">
+                <dc:Bounds height="60.0" width="120.0" x="2040.0" y="220.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="take-applicable-fees" id="BPMNShape_take-applicable-fees">
+                <dc:Bounds height="60.0" width="120.0" x="2240.0" y="20.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="rejection-list-sent" id="BPMNShape_rejection-list-sent">
+                <dc:Bounds height="30.0" width="30.0" x="2285.0" y="235.0"/>
+                <bpmndi:BPMNLabel>
+                    <dc:Bounds height="30.0" width="30.0" x="2285.0" y="280.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="capture-party-details" id="BPMNShape_capture-party-details">
+                <dc:Bounds height="60.0" width="120.0" x="2440.0" y="20.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="print-physical-court-file" id="BPMNShape_print-physical-court-file">
+                <dc:Bounds height="60.0" width="120.0" x="2640.0" y="20.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="put-receipt-and-documents-into-envelope" id="BPMNShape_put-receipt-and-documents-into-envelope">
+                <dc:Bounds height="60.0" width="120.0" x="2840.0" y="20.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="post-envelope-to-party" id="BPMNShape_post-envelope-to-party">
+                <dc:Bounds height="60.0" width="120.0" x="3040.0" y="20.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="documents-and-receipt-posted" id="BPMNShape_documents-and-receipt-posted">
+                <dc:Bounds height="30.0" width="30.0" x="3285.0" y="35.0"/>
+                <bpmndi:BPMNLabel>
+                    <dc:Bounds height="30.0" width="30.0" x="3285.0" y="80.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNEdge bpmnElement="sq-0" id="BPMNEdge_sq-0">
+                <di:waypoint x="115.0" y="150.0"/>
+                <di:waypoint x="240.0" y="150.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-1" id="BPMNEdge_sq-1">
+                <di:waypoint x="360.0" y="150.0"/>
+                <di:waypoint x="440.0" y="150.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-2" id="BPMNEdge_sq-2">
+                <di:waypoint x="560.0" y="150.0"/>
+                <di:waypoint x="640.0" y="150.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-3" id="BPMNEdge_sq-3">
+                <di:waypoint x="760.0" y="150.0"/>
+                <di:waypoint x="840.0" y="150.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-4" id="BPMNEdge_sq-4">
+                <di:waypoint x="960.0" y="150.0"/>
+                <di:waypoint x="1040.0" y="150.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-5" id="BPMNEdge_sq-5">
+                <di:waypoint x="1160.0" y="150.0"/>
+                <di:waypoint x="1240.0" y="150.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-6" id="BPMNEdge_sq-6">
+                <di:waypoint x="1360.0" y="150.0"/>
+                <di:waypoint x="1440.0" y="150.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-8" id="BPMNEdge_sq-8">
+                <di:waypoint x="1960.0" y="50.0"/>
+                <di:waypoint x="2040.0" y="50.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-9" id="BPMNEdge_sq-9">
+                <di:waypoint x="2160.0" y="50.0"/>
+                <di:waypoint x="2240.0" y="50.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-10" id="BPMNEdge_sq-10">
+                <di:waypoint x="2360.0" y="50.0"/>
+                <di:waypoint x="2440.0" y="50.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-11" id="BPMNEdge_sq-11">
+                <di:waypoint x="2560.0" y="50.0"/>
+                <di:waypoint x="2640.0" y="50.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-12" id="BPMNEdge_sq-12">
+                <di:waypoint x="2760.0" y="50.0"/>
+                <di:waypoint x="2840.0" y="50.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-13" id="BPMNEdge_sq-13">
+                <di:waypoint x="2960.0" y="50.0"/>
+                <di:waypoint x="3040.0" y="50.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-14" id="BPMNEdge_sq-14">
+                <di:waypoint x="3160.0" y="50.0"/>
+                <di:waypoint x="3285.0" y="50.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-15" id="BPMNEdge_sq-15">
+                <di:waypoint x="1560.0" y="150.0"/>
+                <di:waypoint x="1670.0" y="150.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-16" id="BPMNEdge_sq-16">
+                <di:waypoint x="1700.0" y="120.0"/>
+                <di:waypoint x="1700.0" y="50.0"/>
+                <di:waypoint x="1840.0" y="50.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-17" id="BPMNEdge_sq-17">
+                <di:waypoint x="1700.0" y="180.0"/>
+                <di:waypoint x="1700.0" y="250.0"/>
+                <di:waypoint x="1840.0" y="250.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-18" id="BPMNEdge_sq-18">
+                <di:waypoint x="1960.0" y="250.0"/>
+                <di:waypoint x="2040.0" y="250.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-19" id="BPMNEdge_sq-19">
+                <di:waypoint x="2160.0" y="250.0"/>
+                <di:waypoint x="2285.0" y="250.0"/>
+            </bpmndi:BPMNEdge>
+        </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</semantic:definitions>

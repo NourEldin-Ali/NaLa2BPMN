@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><semantic:definitions xmlns:semantic="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" exporter="demo" exporterVersion="1.0.0" targetNamespace="http://org.openbpmn">
+    <semantic:process id="process_1" name="Default Process" processType="Public">
+        <semantic:startEvent id="files-pending-processing" name="Files pending processing ">
+            <semantic:outgoing>sq-0</semantic:outgoing>
+        </semantic:startEvent>
+        <semantic:userTask id="check-files" name="Check files ">
+            <semantic:incoming>sq-0</semantic:incoming>
+            <semantic:outgoing>sq-11</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:sequenceFlow id="sq-0" sourceRef="files-pending-processing" targetRef="check-files"/>
+        <semantic:userTask id="track-and-move-files" name="Track and move files ">
+            <semantic:incoming>sq-6</semantic:incoming>
+            <semantic:outgoing>sq-9</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:userTask id="hand-over-files" name="Hand over files ">
+            <semantic:incoming>sq-10</semantic:incoming>
+            <semantic:outgoing>sq-3</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:userTask id="conduct-directions-hearings" name="Conduct directions hearings ">
+            <semantic:incoming>sq-3</semantic:incoming>
+            <semantic:outgoing>sq-4</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:sequenceFlow id="sq-3" sourceRef="hand-over-files" targetRef="conduct-directions-hearings"/>
+        <semantic:endEvent id="directions-hearings-conducted" name=" Directions hearings conducted">
+            <semantic:incoming>sq-4</semantic:incoming>
+        </semantic:endEvent>
+        <semantic:sequenceFlow id="sq-4" sourceRef="conduct-directions-hearings" targetRef="directions-hearings-conducted"/>
+        <semantic:userTask id="distribute-judges--lawlist" name=" Distribute judges' lawlist">
+            <semantic:incoming>sq-7</semantic:incoming>
+            <semantic:outgoing>sq-8</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:parallelGateway gatewayDirection="Diverging" id="gt-0" name="">
+            <semantic:incoming>sq-12</semantic:incoming>
+            <semantic:outgoing>sq-6</semantic:outgoing>
+            <semantic:outgoing>sq-7</semantic:outgoing>
+        </semantic:parallelGateway>
+        <semantic:sequenceFlow id="sq-6" sourceRef="gt-0" targetRef="track-and-move-files"/>
+        <semantic:sequenceFlow id="sq-7" sourceRef="gt-0" targetRef="distribute-judges--lawlist"/>
+        <semantic:parallelGateway gatewayDirection="Diverging" id="gt-1" name="">
+            <semantic:incoming>sq-8</semantic:incoming>
+            <semantic:incoming>sq-9</semantic:incoming>
+            <semantic:outgoing>sq-10</semantic:outgoing>
+        </semantic:parallelGateway>
+        <semantic:sequenceFlow id="sq-8" sourceRef="distribute-judges--lawlist" targetRef="gt-1"/>
+        <semantic:sequenceFlow id="sq-9" sourceRef="track-and-move-files" targetRef="gt-1"/>
+        <semantic:sequenceFlow id="sq-10" sourceRef="gt-1" targetRef="hand-over-files"/>
+        <semantic:userTask id="initiate-search-for-missing-files" name="Initiate search for missing files ">
+            <semantic:incoming>sq-13</semantic:incoming>
+            <semantic:outgoing>sq-14</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:exclusiveGateway gatewayDirection="Diverging" id="gt-2" name="">
+            <semantic:incoming>sq-11</semantic:incoming>
+            <semantic:outgoing>sq-12</semantic:outgoing>
+            <semantic:outgoing>sq-13</semantic:outgoing>
+        </semantic:exclusiveGateway>
+        <semantic:sequenceFlow id="sq-11" sourceRef="check-files" targetRef="gt-2"/>
+        <semantic:sequenceFlow id="sq-12" sourceRef="gt-2" targetRef="gt-0"/>
+        <semantic:sequenceFlow id="sq-13" sourceRef="gt-2" targetRef="initiate-search-for-missing-files"/>
+        <semantic:userTask id="escalate-missing-files-issue" name="Escalate missing files issue ">
+            <semantic:incoming>sq-14</semantic:incoming>
+            <semantic:outgoing>sq-15</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:sequenceFlow id="sq-14" sourceRef="initiate-search-for-missing-files" targetRef="escalate-missing-files-issue"/>
+        <semantic:endEvent id="escalation-for-missing-files" name=" Escalation for missing files">
+            <semantic:incoming>sq-15</semantic:incoming>
+        </semantic:endEvent>
+        <semantic:sequenceFlow id="sq-15" sourceRef="escalate-missing-files-issue" targetRef="escalation-for-missing-files"/>
+    </semantic:process>
+    <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+        <bpmndi:BPMNPlane bpmnElement="process_1" id="BPMNPlane_1">
+            <bpmndi:BPMNShape bpmnElement="gt-0" id="BPMNShape_gt-0">
+                <dc:Bounds height="60.0" width="60.0" x="670.0" y="120.0"/>
+                <bpmndi:BPMNLabel>
+                    <dc:Bounds height="60.0" width="60.0" x="640.0" y="90.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="track-and-move-files" id="BPMNShape_track-and-move-files">
+                <dc:Bounds height="60.0" width="120.0" x="840.0" y="20.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="gt-1" id="BPMNShape_gt-1">
+                <dc:Bounds height="60.0" width="60.0" x="1070.0" y="120.0"/>
+                <bpmndi:BPMNLabel>
+                    <dc:Bounds height="60.0" width="60.0" x="1040.0" y="90.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="hand-over-files" id="BPMNShape_hand-over-files">
+                <dc:Bounds height="60.0" width="120.0" x="1240.0" y="120.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="conduct-directions-hearings" id="BPMNShape_conduct-directions-hearings">
+                <dc:Bounds height="60.0" width="120.0" x="1440.0" y="120.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="directions-hearings-conducted" id="BPMNShape_directions-hearings-conducted">
+                <dc:Bounds height="30.0" width="30.0" x="1685.0" y="135.0"/>
+                <bpmndi:BPMNLabel>
+                    <dc:Bounds height="30.0" width="30.0" x="1685.0" y="180.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="files-pending-processing" id="BPMNShape_files-pending-processing">
+                <dc:Bounds height="30.0" width="30.0" x="85.0" y="235.0"/>
+                <bpmndi:BPMNLabel>
+                    <dc:Bounds height="30.0" width="30.0" x="85.0" y="280.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="check-files" id="BPMNShape_check-files">
+                <dc:Bounds height="60.0" width="120.0" x="240.0" y="220.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="gt-2" id="BPMNShape_gt-2">
+                <dc:Bounds height="60.0" width="60.0" x="470.0" y="220.0"/>
+                <bpmndi:BPMNLabel>
+                    <dc:Bounds height="60.0" width="60.0" x="440.0" y="190.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="initiate-search-for-missing-files" id="BPMNShape_initiate-search-for-missing-files">
+                <dc:Bounds height="60.0" width="120.0" x="640.0" y="320.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="escalate-missing-files-issue" id="BPMNShape_escalate-missing-files-issue">
+                <dc:Bounds height="60.0" width="120.0" x="840.0" y="320.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="escalation-for-missing-files" id="BPMNShape_escalation-for-missing-files">
+                <dc:Bounds height="30.0" width="30.0" x="1085.0" y="335.0"/>
+                <bpmndi:BPMNLabel>
+                    <dc:Bounds height="30.0" width="30.0" x="1085.0" y="380.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="distribute-judges--lawlist" id="BPMNShape_distribute-judges--lawlist">
+                <dc:Bounds height="60.0" width="120.0" x="840.0" y="220.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNEdge bpmnElement="sq-0" id="BPMNEdge_sq-0">
+                <di:waypoint x="115.0" y="250.0"/>
+                <di:waypoint x="240.0" y="250.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-3" id="BPMNEdge_sq-3">
+                <di:waypoint x="1360.0" y="150.0"/>
+                <di:waypoint x="1440.0" y="150.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-4" id="BPMNEdge_sq-4">
+                <di:waypoint x="1560.0" y="150.0"/>
+                <di:waypoint x="1685.0" y="150.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-6" id="BPMNEdge_sq-6">
+                <di:waypoint x="700.0" y="120.0"/>
+                <di:waypoint x="700.0" y="50.0"/>
+                <di:waypoint x="840.0" y="50.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-7" id="BPMNEdge_sq-7">
+                <di:waypoint x="700.0" y="180.0"/>
+                <di:waypoint x="700.0" y="250.0"/>
+                <di:waypoint x="840.0" y="250.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-8" id="BPMNEdge_sq-8">
+                <di:waypoint x="960.0" y="250.0"/>
+                <di:waypoint x="1100.0" y="250.0"/>
+                <di:waypoint x="1100.0" y="180.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-9" id="BPMNEdge_sq-9">
+                <di:waypoint x="960.0" y="50.0"/>
+                <di:waypoint x="1100.0" y="50.0"/>
+                <di:waypoint x="1100.0" y="120.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-10" id="BPMNEdge_sq-10">
+                <di:waypoint x="1130.0" y="150.0"/>
+                <di:waypoint x="1240.0" y="150.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-11" id="BPMNEdge_sq-11">
+                <di:waypoint x="360.0" y="250.0"/>
+                <di:waypoint x="470.0" y="250.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-12" id="BPMNEdge_sq-12">
+                <di:waypoint x="500.0" y="220.0"/>
+                <di:waypoint x="500.0" y="150.0"/>
+                <di:waypoint x="670.0" y="150.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-13" id="BPMNEdge_sq-13">
+                <di:waypoint x="500.0" y="280.0"/>
+                <di:waypoint x="500.0" y="350.0"/>
+                <di:waypoint x="640.0" y="350.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-14" id="BPMNEdge_sq-14">
+                <di:waypoint x="760.0" y="350.0"/>
+                <di:waypoint x="840.0" y="350.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-15" id="BPMNEdge_sq-15">
+                <di:waypoint x="960.0" y="350.0"/>
+                <di:waypoint x="1085.0" y="350.0"/>
+            </bpmndi:BPMNEdge>
+        </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</semantic:definitions>

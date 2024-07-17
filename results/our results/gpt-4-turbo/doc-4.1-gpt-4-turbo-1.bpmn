@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><semantic:definitions xmlns:semantic="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" exporter="demo" exporterVersion="1.0.0" targetNamespace="http://org.openbpmn">
+    <semantic:process id="process_1" name="Default Process" processType="Public">
+        <semantic:startEvent id="family-doctor-decision-to-refer" name="Family doctor decision to refer ">
+            <semantic:outgoing>sq-0</semantic:outgoing>
+        </semantic:startEvent>
+        <semantic:userTask id="contact-secretarial-office" name="Contact secretarial office ">
+            <semantic:incoming>sq-0</semantic:incoming>
+            <semantic:outgoing>sq-1</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:sequenceFlow id="sq-0" sourceRef="family-doctor-decision-to-refer" targetRef="contact-secretarial-office"/>
+        <semantic:userTask id="collect-patient-s-name-and-residence" name="Collect patient's name and residence ">
+            <semantic:incoming>sq-1</semantic:incoming>
+            <semantic:outgoing>sq-2</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:sequenceFlow id="sq-1" sourceRef="contact-secretarial-office" targetRef="collect-patient-s-name-and-residence"/>
+        <semantic:userTask id="connect-doctor-to-nursing-officer" name="Connect doctor to nursing officer ">
+            <semantic:incoming>sq-2</semantic:incoming>
+            <semantic:outgoing>sq-3</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:sequenceFlow id="sq-2" sourceRef="collect-patient-s-name-and-residence" targetRef="connect-doctor-to-nursing-officer"/>
+        <semantic:userTask id="conduct-detailed-assessment" name="Conduct detailed assessment ">
+            <semantic:incoming>sq-3</semantic:incoming>
+            <semantic:outgoing>sq-4</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:sequenceFlow id="sq-3" sourceRef="connect-doctor-to-nursing-officer" targetRef="conduct-detailed-assessment"/>
+        <semantic:userTask id="record-assessment-information" name="Record assessment information ">
+            <semantic:incoming>sq-4</semantic:incoming>
+            <semantic:outgoing>sq-5</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:sequenceFlow id="sq-4" sourceRef="conduct-detailed-assessment" targetRef="record-assessment-information"/>
+        <semantic:userTask id="submit-registration-form" name="Submit registration form ">
+            <semantic:incoming>sq-5</semantic:incoming>
+            <semantic:outgoing>sq-6</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:sequenceFlow id="sq-5" sourceRef="record-assessment-information" targetRef="submit-registration-form"/>
+        <semantic:userTask id="enter-data-into-information-system" name="Enter data into information system ">
+            <semantic:incoming>sq-6</semantic:incoming>
+            <semantic:outgoing>sq-7</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:sequenceFlow id="sq-6" sourceRef="submit-registration-form" targetRef="enter-data-into-information-system"/>
+        <semantic:userTask id="print-registration-form" name="Print registration form ">
+            <semantic:incoming>sq-7</semantic:incoming>
+            <semantic:outgoing>sq-8</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:sequenceFlow id="sq-7" sourceRef="enter-data-into-information-system" targetRef="print-registration-form"/>
+        <semantic:userTask id="create-patient-file" name="Create patient file ">
+            <semantic:incoming>sq-8</semantic:incoming>
+            <semantic:outgoing>sq-9</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:sequenceFlow id="sq-8" sourceRef="print-registration-form" targetRef="create-patient-file"/>
+        <semantic:userTask id="store-registration-form-and-printout" name="Store registration form and printout ">
+            <semantic:incoming>sq-9</semantic:incoming>
+            <semantic:outgoing>sq-10</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:sequenceFlow id="sq-9" sourceRef="create-patient-file" targetRef="store-registration-form-and-printout"/>
+        <semantic:userTask id="produce-two-registration-cards" name="Produce two registration cards ">
+            <semantic:incoming>sq-10</semantic:incoming>
+            <semantic:outgoing>sq-11</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:sequenceFlow id="sq-10" sourceRef="store-registration-form-and-printout" targetRef="produce-two-registration-cards"/>
+        <semantic:userTask id="add-patient-to-new-notices-list" name="Add patient to new notices list ">
+            <semantic:incoming>sq-11</semantic:incoming>
+            <semantic:outgoing>sq-12</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:sequenceFlow id="sq-11" sourceRef="produce-two-registration-cards" targetRef="add-patient-to-new-notices-list"/>
+        <semantic:userTask id="assign-new-patients-to-workers" name="Assign new patients to workers ">
+            <semantic:incoming>sq-12</semantic:incoming>
+            <semantic:outgoing>sq-13</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:sequenceFlow id="sq-12" sourceRef="add-patient-to-new-notices-list" targetRef="assign-new-patients-to-workers"/>
+        <semantic:userTask id="record-assignments" name="Record assignments ">
+            <semantic:incoming>sq-13</semantic:incoming>
+            <semantic:outgoing>sq-14</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:sequenceFlow id="sq-13" sourceRef="assign-new-patients-to-workers" targetRef="record-assignments"/>
+        <semantic:userTask id="distribute-registration-cards" name="Distribute registration cards ">
+            <semantic:incoming>sq-14</semantic:incoming>
+            <semantic:outgoing>sq-15</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:sequenceFlow id="sq-14" sourceRef="record-assignments" targetRef="distribute-registration-cards"/>
+        <semantic:userTask id="request-medical-file-from-family-doctor" name="Request medical file from family doctor ">
+            <semantic:incoming>sq-15</semantic:incoming>
+            <semantic:outgoing>sq-16</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:sequenceFlow id="sq-15" sourceRef="distribute-registration-cards" targetRef="request-medical-file-from-family-doctor"/>
+        <semantic:userTask id="add-medical-file-to-patient-file" name="Add medical file to patient file ">
+            <semantic:incoming>sq-16</semantic:incoming>
+            <semantic:outgoing>sq-17</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:sequenceFlow id="sq-16" sourceRef="request-medical-file-from-family-doctor" targetRef="add-medical-file-to-patient-file"/>
+        <semantic:userTask id="notify-second-intaker-about-medical-file" name="Notify second intaker about medical file ">
+            <semantic:incoming>sq-17</semantic:incoming>
+            <semantic:outgoing>sq-18</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:sequenceFlow id="sq-17" sourceRef="add-medical-file-to-patient-file" targetRef="notify-second-intaker-about-medical-file"/>
+        <semantic:userTask id="schedule-initial-meeting" name="Schedule initial meeting ">
+            <semantic:incoming>sq-18</semantic:incoming>
+            <semantic:outgoing>sq-19</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:sequenceFlow id="sq-18" sourceRef="notify-second-intaker-about-medical-file" targetRef="schedule-initial-meeting"/>
+        <semantic:userTask id="conduct-initial-meeting" name="Conduct initial meeting ">
+            <semantic:incoming>sq-19</semantic:incoming>
+            <semantic:outgoing>sq-20</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:sequenceFlow id="sq-19" sourceRef="schedule-initial-meeting" targetRef="conduct-initial-meeting"/>
+        <semantic:userTask id="make-additional-notes" name="Make additional notes ">
+            <semantic:incoming>sq-20</semantic:incoming>
+            <semantic:outgoing>sq-21</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:sequenceFlow id="sq-20" sourceRef="conduct-initial-meeting" targetRef="make-additional-notes"/>
+        <semantic:userTask id="file-additional-notes" name="File additional notes ">
+            <semantic:incoming>sq-21</semantic:incoming>
+            <semantic:outgoing>sq-22</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:sequenceFlow id="sq-21" sourceRef="make-additional-notes" targetRef="file-additional-notes"/>
+        <semantic:userTask id="schedule-second-meeting" name="Schedule second meeting ">
+            <semantic:incoming>sq-22</semantic:incoming>
+            <semantic:outgoing>sq-23</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:sequenceFlow id="sq-22" sourceRef="file-additional-notes" targetRef="schedule-second-meeting"/>
+        <semantic:userTask id="record-meeting-observations" name="Record meeting observations ">
+            <semantic:incoming>sq-23</semantic:incoming>
+            <semantic:outgoing>sq-24</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:sequenceFlow id="sq-23" sourceRef="schedule-second-meeting" targetRef="record-meeting-observations"/>
+        <semantic:userTask id="transcribe-observations" name="Transcribe observations ">
+            <semantic:incoming>sq-24</semantic:incoming>
+            <semantic:outgoing>sq-25</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:sequenceFlow id="sq-24" sourceRef="record-meeting-observations" targetRef="transcribe-observations"/>
+        <semantic:userTask id="add-observations-to-patient-file" name="Add observations to patient file ">
+            <semantic:incoming>sq-25</semantic:incoming>
+            <semantic:outgoing>sq-26</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:sequenceFlow id="sq-25" sourceRef="transcribe-observations" targetRef="add-observations-to-patient-file"/>
+        <semantic:userTask id="update-patient-status" name="Update patient status ">
+            <semantic:incoming>sq-26</semantic:incoming>
+            <semantic:outgoing>sq-27</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:sequenceFlow id="sq-26" sourceRef="add-observations-to-patient-file" targetRef="update-patient-status"/>
+        <semantic:userTask id="prepare-list-for-staff-meeting" name="Prepare list for staff meeting ">
+            <semantic:incoming>sq-27</semantic:incoming>
+            <semantic:outgoing>sq-28</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:sequenceFlow id="sq-27" sourceRef="update-patient-status" targetRef="prepare-list-for-staff-meeting"/>
+        <semantic:userTask id="formulate-treatment-plan" name="Formulate treatment plan ">
+            <semantic:incoming>sq-28</semantic:incoming>
+            <semantic:outgoing>sq-29</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:sequenceFlow id="sq-28" sourceRef="prepare-list-for-staff-meeting" targetRef="formulate-treatment-plan"/>
+        <semantic:endEvent id="treatment-plan-formulated" name=" Treatment plan formulated">
+            <semantic:incoming>sq-29</semantic:incoming>
+        </semantic:endEvent>
+        <semantic:sequenceFlow id="sq-29" sourceRef="formulate-treatment-plan" targetRef="treatment-plan-formulated"/>
+    </semantic:process>
+    <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+        <bpmndi:BPMNPlane bpmnElement="process_1" id="BPMNPlane_1">
+            <bpmndi:BPMNShape bpmnElement="family-doctor-decision-to-refer" id="BPMNShape_family-doctor-decision-to-refer">
+                <dc:Bounds height="30.0" width="30.0" x="85.0" y="35.0"/>
+                <bpmndi:BPMNLabel>
+                    <dc:Bounds height="30.0" width="30.0" x="85.0" y="80.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="contact-secretarial-office" id="BPMNShape_contact-secretarial-office">
+                <dc:Bounds height="60.0" width="120.0" x="240.0" y="20.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="collect-patient-s-name-and-residence" id="BPMNShape_collect-patient-s-name-and-residence">
+                <dc:Bounds height="60.0" width="120.0" x="440.0" y="20.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="connect-doctor-to-nursing-officer" id="BPMNShape_connect-doctor-to-nursing-officer">
+                <dc:Bounds height="60.0" width="120.0" x="640.0" y="20.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="conduct-detailed-assessment" id="BPMNShape_conduct-detailed-assessment">
+                <dc:Bounds height="60.0" width="120.0" x="840.0" y="20.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="record-assessment-information" id="BPMNShape_record-assessment-information">
+                <dc:Bounds height="60.0" width="120.0" x="1040.0" y="20.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="submit-registration-form" id="BPMNShape_submit-registration-form">
+                <dc:Bounds height="60.0" width="120.0" x="1240.0" y="20.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="enter-data-into-information-system" id="BPMNShape_enter-data-into-information-system">
+                <dc:Bounds height="60.0" width="120.0" x="1440.0" y="20.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="print-registration-form" id="BPMNShape_print-registration-form">
+                <dc:Bounds height="60.0" width="120.0" x="1640.0" y="20.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="create-patient-file" id="BPMNShape_create-patient-file">
+                <dc:Bounds height="60.0" width="120.0" x="1840.0" y="20.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="store-registration-form-and-printout" id="BPMNShape_store-registration-form-and-printout">
+                <dc:Bounds height="60.0" width="120.0" x="2040.0" y="20.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="produce-two-registration-cards" id="BPMNShape_produce-two-registration-cards">
+                <dc:Bounds height="60.0" width="120.0" x="2240.0" y="20.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="add-patient-to-new-notices-list" id="BPMNShape_add-patient-to-new-notices-list">
+                <dc:Bounds height="60.0" width="120.0" x="2440.0" y="20.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="assign-new-patients-to-workers" id="BPMNShape_assign-new-patients-to-workers">
+                <dc:Bounds height="60.0" width="120.0" x="2640.0" y="20.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="record-assignments" id="BPMNShape_record-assignments">
+                <dc:Bounds height="60.0" width="120.0" x="2840.0" y="20.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="distribute-registration-cards" id="BPMNShape_distribute-registration-cards">
+                <dc:Bounds height="60.0" width="120.0" x="3040.0" y="20.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="request-medical-file-from-family-doctor" id="BPMNShape_request-medical-file-from-family-doctor">
+                <dc:Bounds height="60.0" width="120.0" x="3240.0" y="20.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="add-medical-file-to-patient-file" id="BPMNShape_add-medical-file-to-patient-file">
+                <dc:Bounds height="60.0" width="120.0" x="3440.0" y="20.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="notify-second-intaker-about-medical-file" id="BPMNShape_notify-second-intaker-about-medical-file">
+                <dc:Bounds height="60.0" width="120.0" x="3640.0" y="20.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="schedule-initial-meeting" id="BPMNShape_schedule-initial-meeting">
+                <dc:Bounds height="60.0" width="120.0" x="3840.0" y="20.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="conduct-initial-meeting" id="BPMNShape_conduct-initial-meeting">
+                <dc:Bounds height="60.0" width="120.0" x="4040.0" y="20.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="make-additional-notes" id="BPMNShape_make-additional-notes">
+                <dc:Bounds height="60.0" width="120.0" x="4240.0" y="20.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="file-additional-notes" id="BPMNShape_file-additional-notes">
+                <dc:Bounds height="60.0" width="120.0" x="4440.0" y="20.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="schedule-second-meeting" id="BPMNShape_schedule-second-meeting">
+                <dc:Bounds height="60.0" width="120.0" x="4640.0" y="20.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="record-meeting-observations" id="BPMNShape_record-meeting-observations">
+                <dc:Bounds height="60.0" width="120.0" x="4840.0" y="20.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="transcribe-observations" id="BPMNShape_transcribe-observations">
+                <dc:Bounds height="60.0" width="120.0" x="5040.0" y="20.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="add-observations-to-patient-file" id="BPMNShape_add-observations-to-patient-file">
+                <dc:Bounds height="60.0" width="120.0" x="5240.0" y="20.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="update-patient-status" id="BPMNShape_update-patient-status">
+                <dc:Bounds height="60.0" width="120.0" x="5440.0" y="20.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="prepare-list-for-staff-meeting" id="BPMNShape_prepare-list-for-staff-meeting">
+                <dc:Bounds height="60.0" width="120.0" x="5640.0" y="20.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="formulate-treatment-plan" id="BPMNShape_formulate-treatment-plan">
+                <dc:Bounds height="60.0" width="120.0" x="5840.0" y="20.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="treatment-plan-formulated" id="BPMNShape_treatment-plan-formulated">
+                <dc:Bounds height="30.0" width="30.0" x="6085.0" y="35.0"/>
+                <bpmndi:BPMNLabel>
+                    <dc:Bounds height="30.0" width="30.0" x="6085.0" y="80.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNEdge bpmnElement="sq-0" id="BPMNEdge_sq-0">
+                <di:waypoint x="115.0" y="50.0"/>
+                <di:waypoint x="240.0" y="50.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-1" id="BPMNEdge_sq-1">
+                <di:waypoint x="360.0" y="50.0"/>
+                <di:waypoint x="440.0" y="50.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-2" id="BPMNEdge_sq-2">
+                <di:waypoint x="560.0" y="50.0"/>
+                <di:waypoint x="640.0" y="50.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-3" id="BPMNEdge_sq-3">
+                <di:waypoint x="760.0" y="50.0"/>
+                <di:waypoint x="840.0" y="50.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-4" id="BPMNEdge_sq-4">
+                <di:waypoint x="960.0" y="50.0"/>
+                <di:waypoint x="1040.0" y="50.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-5" id="BPMNEdge_sq-5">
+                <di:waypoint x="1160.0" y="50.0"/>
+                <di:waypoint x="1240.0" y="50.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-6" id="BPMNEdge_sq-6">
+                <di:waypoint x="1360.0" y="50.0"/>
+                <di:waypoint x="1440.0" y="50.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-7" id="BPMNEdge_sq-7">
+                <di:waypoint x="1560.0" y="50.0"/>
+                <di:waypoint x="1640.0" y="50.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-8" id="BPMNEdge_sq-8">
+                <di:waypoint x="1760.0" y="50.0"/>
+                <di:waypoint x="1840.0" y="50.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-9" id="BPMNEdge_sq-9">
+                <di:waypoint x="1960.0" y="50.0"/>
+                <di:waypoint x="2040.0" y="50.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-10" id="BPMNEdge_sq-10">
+                <di:waypoint x="2160.0" y="50.0"/>
+                <di:waypoint x="2240.0" y="50.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-11" id="BPMNEdge_sq-11">
+                <di:waypoint x="2360.0" y="50.0"/>
+                <di:waypoint x="2440.0" y="50.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-12" id="BPMNEdge_sq-12">
+                <di:waypoint x="2560.0" y="50.0"/>
+                <di:waypoint x="2640.0" y="50.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-13" id="BPMNEdge_sq-13">
+                <di:waypoint x="2760.0" y="50.0"/>
+                <di:waypoint x="2840.0" y="50.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-14" id="BPMNEdge_sq-14">
+                <di:waypoint x="2960.0" y="50.0"/>
+                <di:waypoint x="3040.0" y="50.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-15" id="BPMNEdge_sq-15">
+                <di:waypoint x="3160.0" y="50.0"/>
+                <di:waypoint x="3240.0" y="50.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-16" id="BPMNEdge_sq-16">
+                <di:waypoint x="3360.0" y="50.0"/>
+                <di:waypoint x="3440.0" y="50.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-17" id="BPMNEdge_sq-17">
+                <di:waypoint x="3560.0" y="50.0"/>
+                <di:waypoint x="3640.0" y="50.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-18" id="BPMNEdge_sq-18">
+                <di:waypoint x="3760.0" y="50.0"/>
+                <di:waypoint x="3840.0" y="50.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-19" id="BPMNEdge_sq-19">
+                <di:waypoint x="3960.0" y="50.0"/>
+                <di:waypoint x="4040.0" y="50.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-20" id="BPMNEdge_sq-20">
+                <di:waypoint x="4160.0" y="50.0"/>
+                <di:waypoint x="4240.0" y="50.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-21" id="BPMNEdge_sq-21">
+                <di:waypoint x="4360.0" y="50.0"/>
+                <di:waypoint x="4440.0" y="50.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-22" id="BPMNEdge_sq-22">
+                <di:waypoint x="4560.0" y="50.0"/>
+                <di:waypoint x="4640.0" y="50.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-23" id="BPMNEdge_sq-23">
+                <di:waypoint x="4760.0" y="50.0"/>
+                <di:waypoint x="4840.0" y="50.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-24" id="BPMNEdge_sq-24">
+                <di:waypoint x="4960.0" y="50.0"/>
+                <di:waypoint x="5040.0" y="50.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-25" id="BPMNEdge_sq-25">
+                <di:waypoint x="5160.0" y="50.0"/>
+                <di:waypoint x="5240.0" y="50.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-26" id="BPMNEdge_sq-26">
+                <di:waypoint x="5360.0" y="50.0"/>
+                <di:waypoint x="5440.0" y="50.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-27" id="BPMNEdge_sq-27">
+                <di:waypoint x="5560.0" y="50.0"/>
+                <di:waypoint x="5640.0" y="50.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-28" id="BPMNEdge_sq-28">
+                <di:waypoint x="5760.0" y="50.0"/>
+                <di:waypoint x="5840.0" y="50.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-29" id="BPMNEdge_sq-29">
+                <di:waypoint x="5960.0" y="50.0"/>
+                <di:waypoint x="6085.0" y="50.0"/>
+            </bpmndi:BPMNEdge>
+        </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</semantic:definitions>

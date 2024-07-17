@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><semantic:definitions xmlns:semantic="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" exporter="demo" exporterVersion="1.0.0" targetNamespace="http://org.openbpmn">
+    <semantic:process id="process_1" name="Default Process" processType="Public">
+        <semantic:startEvent id="guest-ready-to-order" name="Guest ready to order ">
+            <semantic:outgoing>sq-0</semantic:outgoing>
+        </semantic:startEvent>
+        <semantic:userTask id="place-order-via-phone" name="Place order via phone ">
+            <semantic:incoming>sq-0</semantic:incoming>
+            <semantic:outgoing>sq-1</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:sequenceFlow id="sq-0" sourceRef="guest-ready-to-order" targetRef="place-order-via-phone"/>
+        <semantic:userTask id="record-order" name="Record order ">
+            <semantic:incoming>sq-1</semantic:incoming>
+            <semantic:outgoing>sq-2</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:sequenceFlow id="sq-1" sourceRef="place-order-via-phone" targetRef="record-order"/>
+        <semantic:userTask id="issue-order-ticket" name="Issue order ticket ">
+            <semantic:incoming>sq-2</semantic:incoming>
+            <semantic:outgoing>sq-20</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:sequenceFlow id="sq-2" sourceRef="record-order" targetRef="issue-order-ticket"/>
+        <semantic:userTask id="prepare-non-alcoholic-beverages" name="Prepare non-alcoholic beverages ">
+            <semantic:incoming>sq-26</semantic:incoming>
+            <semantic:outgoing>sq-24</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:userTask id="prepare-service-cart" name="Prepare service cart ">
+            <semantic:incoming>sq-25</semantic:incoming>
+            <semantic:outgoing>sq-18</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:userTask id="assemble-order-on-cart" name="Assemble order on cart ">
+            <semantic:incoming>sq-19</semantic:incoming>
+            <semantic:outgoing>sq-6</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:userTask id="deliver-order-to-guest-s-room" name="Deliver order to guest's room ">
+            <semantic:incoming>sq-6</semantic:incoming>
+            <semantic:outgoing>sq-7</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:sequenceFlow id="sq-6" sourceRef="assemble-order-on-cart" targetRef="deliver-order-to-guest-s-room"/>
+        <semantic:userTask id="debit-guest-s-account" name="Debit guest's account ">
+            <semantic:incoming>sq-7</semantic:incoming>
+            <semantic:outgoing>sq-11</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:sequenceFlow id="sq-7" sourceRef="deliver-order-to-guest-s-room" targetRef="debit-guest-s-account"/>
+        <semantic:userTask id="delay-billing" name="Delay billing ">
+            <semantic:incoming>sq-12</semantic:incoming>
+            <semantic:outgoing>sq-9</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:userTask id="prepare-subsequent-order" name="Prepare subsequent order ">
+            <semantic:incoming>sq-9</semantic:incoming>
+            <semantic:outgoing>sq-10</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:sequenceFlow id="sq-9" sourceRef="delay-billing" targetRef="prepare-subsequent-order"/>
+        <semantic:endEvent id="order-prepared-or-delivered" name=" Order prepared or delivered">
+            <semantic:incoming>sq-10</semantic:incoming>
+        </semantic:endEvent>
+        <semantic:sequenceFlow id="sq-10" sourceRef="prepare-subsequent-order" targetRef="order-prepared-or-delivered"/>
+        <semantic:endEvent id="guest-account-debited" name=" Guest account debited">
+            <semantic:incoming>sq-13</semantic:incoming>
+        </semantic:endEvent>
+        <semantic:exclusiveGateway gatewayDirection="Diverging" id="gt-0" name="">
+            <semantic:incoming>sq-11</semantic:incoming>
+            <semantic:outgoing>sq-12</semantic:outgoing>
+            <semantic:outgoing>sq-13</semantic:outgoing>
+        </semantic:exclusiveGateway>
+        <semantic:sequenceFlow id="sq-11" sourceRef="debit-guest-s-account" targetRef="gt-0"/>
+        <semantic:sequenceFlow id="sq-12" sourceRef="gt-0" targetRef="delay-billing"/>
+        <semantic:sequenceFlow id="sq-13" sourceRef="gt-0" targetRef="guest-account-debited"/>
+        <semantic:userTask id="select-and-prepare-wine" name="Select and prepare wine ">
+            <semantic:incoming>sq-27</semantic:incoming>
+            <semantic:outgoing>sq-17</semantic:outgoing>
+        </semantic:userTask>
+        <semantic:parallelGateway gatewayDirection="Diverging" id="gt-2" name="">
+            <semantic:incoming>sq-17</semantic:incoming>
+            <semantic:incoming>sq-18</semantic:incoming>
+            <semantic:outgoing>sq-19</semantic:outgoing>
+        </semantic:parallelGateway>
+        <semantic:sequenceFlow id="sq-17" sourceRef="select-and-prepare-wine" targetRef="gt-2"/>
+        <semantic:sequenceFlow id="sq-18" sourceRef="prepare-service-cart" targetRef="gt-2"/>
+        <semantic:sequenceFlow id="sq-19" sourceRef="gt-2" targetRef="assemble-order-on-cart"/>
+        <semantic:parallelGateway gatewayDirection="Diverging" id="gt-3" name="">
+            <semantic:incoming>sq-20</semantic:incoming>
+            <semantic:outgoing>sq-23</semantic:outgoing>
+            <semantic:outgoing>sq-26</semantic:outgoing>
+            <semantic:outgoing>sq-27</semantic:outgoing>
+        </semantic:parallelGateway>
+        <semantic:sequenceFlow id="sq-20" sourceRef="issue-order-ticket" targetRef="gt-3"/>
+        <semantic:parallelGateway gatewayDirection="Diverging" id="gt-4" name="">
+            <semantic:incoming>sq-23</semantic:incoming>
+            <semantic:incoming>sq-24</semantic:incoming>
+            <semantic:outgoing>sq-25</semantic:outgoing>
+        </semantic:parallelGateway>
+        <semantic:sequenceFlow id="sq-23" sourceRef="gt-3" targetRef="gt-4"/>
+        <semantic:sequenceFlow id="sq-24" sourceRef="prepare-non-alcoholic-beverages" targetRef="gt-4"/>
+        <semantic:sequenceFlow id="sq-25" sourceRef="gt-4" targetRef="prepare-service-cart"/>
+        <semantic:sequenceFlow id="sq-26" sourceRef="gt-3" targetRef="prepare-non-alcoholic-beverages"/>
+        <semantic:sequenceFlow id="sq-27" sourceRef="gt-3" targetRef="select-and-prepare-wine"/>
+    </semantic:process>
+    <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+        <bpmndi:BPMNPlane bpmnElement="process_1" id="BPMNPlane_1">
+            <bpmndi:BPMNShape bpmnElement="gt-2" id="BPMNShape_gt-2">
+                <dc:Bounds height="60.0" width="60.0" x="1670.0" y="120.0"/>
+                <bpmndi:BPMNLabel>
+                    <dc:Bounds height="60.0" width="60.0" x="1640.0" y="90.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="assemble-order-on-cart" id="BPMNShape_assemble-order-on-cart">
+                <dc:Bounds height="60.0" width="120.0" x="1840.0" y="120.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="deliver-order-to-guest-s-room" id="BPMNShape_deliver-order-to-guest-s-room">
+                <dc:Bounds height="60.0" width="120.0" x="2040.0" y="120.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="debit-guest-s-account" id="BPMNShape_debit-guest-s-account">
+                <dc:Bounds height="60.0" width="120.0" x="2240.0" y="120.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="gt-0" id="BPMNShape_gt-0">
+                <dc:Bounds height="60.0" width="60.0" x="2470.0" y="120.0"/>
+                <bpmndi:BPMNLabel>
+                    <dc:Bounds height="60.0" width="60.0" x="2440.0" y="90.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="delay-billing" id="BPMNShape_delay-billing">
+                <dc:Bounds height="60.0" width="120.0" x="2640.0" y="20.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="prepare-subsequent-order" id="BPMNShape_prepare-subsequent-order">
+                <dc:Bounds height="60.0" width="120.0" x="2840.0" y="20.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="order-prepared-or-delivered" id="BPMNShape_order-prepared-or-delivered">
+                <dc:Bounds height="30.0" width="30.0" x="3085.0" y="35.0"/>
+                <bpmndi:BPMNLabel>
+                    <dc:Bounds height="30.0" width="30.0" x="3085.0" y="80.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="guest-ready-to-order" id="BPMNShape_guest-ready-to-order">
+                <dc:Bounds height="30.0" width="30.0" x="85.0" y="35.0"/>
+                <bpmndi:BPMNLabel>
+                    <dc:Bounds height="30.0" width="30.0" x="85.0" y="80.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="place-order-via-phone" id="BPMNShape_place-order-via-phone">
+                <dc:Bounds height="60.0" width="120.0" x="240.0" y="20.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="record-order" id="BPMNShape_record-order">
+                <dc:Bounds height="60.0" width="120.0" x="440.0" y="20.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="issue-order-ticket" id="BPMNShape_issue-order-ticket">
+                <dc:Bounds height="60.0" width="120.0" x="640.0" y="20.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="gt-3" id="BPMNShape_gt-3">
+                <dc:Bounds height="60.0" width="60.0" x="870.0" y="20.0"/>
+                <bpmndi:BPMNLabel>
+                    <dc:Bounds height="60.0" width="60.0" x="840.0" y="-10.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="prepare-non-alcoholic-beverages" id="BPMNShape_prepare-non-alcoholic-beverages">
+                <dc:Bounds height="60.0" width="120.0" x="1040.0" y="20.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="gt-4" id="BPMNShape_gt-4">
+                <dc:Bounds height="60.0" width="60.0" x="1270.0" y="20.0"/>
+                <bpmndi:BPMNLabel>
+                    <dc:Bounds height="60.0" width="60.0" x="1240.0" y="-10.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="prepare-service-cart" id="BPMNShape_prepare-service-cart">
+                <dc:Bounds height="60.0" width="120.0" x="1440.0" y="20.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="select-and-prepare-wine" id="BPMNShape_select-and-prepare-wine">
+                <dc:Bounds height="60.0" width="120.0" x="1040.0" y="220.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="guest-account-debited" id="BPMNShape_guest-account-debited">
+                <dc:Bounds height="30.0" width="30.0" x="2685.0" y="235.0"/>
+                <bpmndi:BPMNLabel>
+                    <dc:Bounds height="30.0" width="30.0" x="2685.0" y="280.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNEdge bpmnElement="sq-0" id="BPMNEdge_sq-0">
+                <di:waypoint x="115.0" y="50.0"/>
+                <di:waypoint x="240.0" y="50.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-1" id="BPMNEdge_sq-1">
+                <di:waypoint x="360.0" y="50.0"/>
+                <di:waypoint x="440.0" y="50.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-2" id="BPMNEdge_sq-2">
+                <di:waypoint x="560.0" y="50.0"/>
+                <di:waypoint x="640.0" y="50.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-6" id="BPMNEdge_sq-6">
+                <di:waypoint x="1960.0" y="150.0"/>
+                <di:waypoint x="2040.0" y="150.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-7" id="BPMNEdge_sq-7">
+                <di:waypoint x="2160.0" y="150.0"/>
+                <di:waypoint x="2240.0" y="150.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-9" id="BPMNEdge_sq-9">
+                <di:waypoint x="2760.0" y="50.0"/>
+                <di:waypoint x="2840.0" y="50.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-10" id="BPMNEdge_sq-10">
+                <di:waypoint x="2960.0" y="50.0"/>
+                <di:waypoint x="3085.0" y="50.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-11" id="BPMNEdge_sq-11">
+                <di:waypoint x="2360.0" y="150.0"/>
+                <di:waypoint x="2470.0" y="150.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-12" id="BPMNEdge_sq-12">
+                <di:waypoint x="2500.0" y="120.0"/>
+                <di:waypoint x="2500.0" y="50.0"/>
+                <di:waypoint x="2640.0" y="50.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-13" id="BPMNEdge_sq-13">
+                <di:waypoint x="2500.0" y="180.0"/>
+                <di:waypoint x="2500.0" y="250.0"/>
+                <di:waypoint x="2685.0" y="250.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-17" id="BPMNEdge_sq-17">
+                <di:waypoint x="1160.0" y="250.0"/>
+                <di:waypoint x="1700.0" y="250.0"/>
+                <di:waypoint x="1700.0" y="180.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-18" id="BPMNEdge_sq-18">
+                <di:waypoint x="1560.0" y="50.0"/>
+                <di:waypoint x="1700.0" y="50.0"/>
+                <di:waypoint x="1700.0" y="120.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-19" id="BPMNEdge_sq-19">
+                <di:waypoint x="1730.0" y="150.0"/>
+                <di:waypoint x="1840.0" y="150.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-20" id="BPMNEdge_sq-20">
+                <di:waypoint x="760.0" y="50.0"/>
+                <di:waypoint x="870.0" y="50.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-23" id="BPMNEdge_sq-23">
+                <di:waypoint x="900.0" y="80.0"/>
+                <di:waypoint x="900.0" y="180.0"/>
+                <di:waypoint x="1300.0" y="180.0"/>
+                <di:waypoint x="1300.0" y="80.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-24" id="BPMNEdge_sq-24">
+                <di:waypoint x="1160.0" y="50.0"/>
+                <di:waypoint x="1270.0" y="50.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-25" id="BPMNEdge_sq-25">
+                <di:waypoint x="1330.0" y="50.0"/>
+                <di:waypoint x="1440.0" y="50.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-26" id="BPMNEdge_sq-26">
+                <di:waypoint x="930.0" y="50.0"/>
+                <di:waypoint x="1040.0" y="50.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sq-27" id="BPMNEdge_sq-27">
+                <di:waypoint x="900.0" y="80.0"/>
+                <di:waypoint x="900.0" y="250.0"/>
+                <di:waypoint x="1040.0" y="250.0"/>
+            </bpmndi:BPMNEdge>
+        </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</semantic:definitions>
