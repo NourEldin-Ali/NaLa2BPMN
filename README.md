@@ -7,7 +7,7 @@ This repository contains the technical report, and the results for our paper tit
 Our tool is available in <a href="https://nala2bpmn.bonitapps.com/">https://nala2bpmn.bonitapps.com/</a>
 
 ## Technical Report
-The technical report, which includes detailed information about our algorithm, can be found in the [technical_report](technical_report/) folder.
+The technical report, which includes detailed information about our algorithm, can be found in the [technical_report](Nala2BPMN___technical_report.pdf) file.
 
 ## Results
 The results of the two run executions for both our approach and the ProMoAI approach can be found in the [results](evaluation_results/generated_bpmn/) folder.
