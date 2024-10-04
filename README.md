@@ -7,10 +7,7 @@ This repository contains the technical report, and the results for our paper tit
 Our tool is available in <a href="https://nala2bpmn.bonitapps.com/">https://nala2bpmn.bonitapps.com/</a>
 
 ## Demo Video
-<video width="640" height="480" controls>
-  <source src="nala2bpmn-demo-coopis.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+[Download the video](nala2bpmn-demo-coopis.mp4) or <a href="https://drive.google.com/file/d/1869nSsXQODxXdZ3u9k3LGmOdnzAPd4Pf/view?usp=sharing">watch here</a>.
 
 ## Technical Report
 The technical report, which includes detailed information about our algorithm, can be found in the [technical_report](Nala2BPMN___technical_report.pdf) file.
