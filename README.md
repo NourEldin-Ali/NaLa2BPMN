@@ -1,7 +1,14 @@
-# A Decomposed Hybrid Approach to Business Process Modeling with LLMs
+<!-- # A Decomposed Hybrid Approach to Business Process Modeling with LLMs
 
 ## Introduction
 This repository contains the technical report, and the results for our paper titled "A Decomposed Hybrid Approach to Business Process Modeling with LLMs". 
+
+-->
+
+# Nala2BPMN: Automating BPMN Model Generation with Large Language Models
+
+## Introduction
+This repository contains the demo video of our tool, the technical report, and the results presented in our paper.
 
 ## Online tool
 Our tool is available in <a href="https://nala2bpmn.bonitapps.com/">https://nala2bpmn.bonitapps.com/</a>
