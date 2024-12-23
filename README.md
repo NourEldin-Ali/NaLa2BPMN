@@ -11,6 +11,7 @@ This repository contains the technical report, and the results for our paper tit
 This repository contains information about scientific and demo papers. It also includes a demo video of our tool, the technical report, and the results presented in our paper.
 
 Regular Paper: <a href="https://www.researchgate.net/publication/385975744_A_Decomposed_Hybrid_Approach_to_Business_Process_Modeling_with_LLMs">A Decomposed Hybrid Approach to Business Process Modeling with LLMs</a>
+
 Demo Paper: <a href="https://www.researchgate.net/publication/385976015_Nala2BPMN_Automating_BPMN_Model_Generation_with_Large_Language_Models">Nala2BPMN: Automating BPMN Model Generation with Large Language Models</a>
 
 ## Online tool
